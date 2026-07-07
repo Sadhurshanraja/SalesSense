@@ -1,0 +1,282 @@
+Chapter 7: Implementation  
+7.1 Chapter Overview  
+ 
+This chapter describes the implementation of the proposed SalesSense forecasting system, 
+translating the design and algorithmic structures presented in Chapter 6 into a functional 
+prototype. The implementation phase focused on developing modular components  for data 
+preprocessing, feature engineering, XGBoost -based revenue forecasting, inventory 
+recommendation logic, and SHAP -based explainability. Following the layered architecture 
+defined earlier, each module was developed and integrated to ensure accuracy,  
+maintainability, and usability. This chapter outlines the technologies used and explains how 
+the system design was transformed into a working machine learning application.  
+7.2 Technology Selection  
+This section justifies the selection of tools, frameworks, and programming languages used for 
+the development of the prototype and the AI/ML model. The choices were made to ensure 
+high performance, scalability, and ease of integration between the machine l earning backend 
+and the interactive frontend.  
+7.2.1  Technology Stack  
+ 
+The following figure visualizes the technology stack, separated into the Frontend (User 
+Interface), Backend (API & Processing), and Data/ML Layer.  
+    Figure 12 : Technology Stack  
+
+ML-Based Sales Forecasting for Retail Spices                         CHAPTER 07: Implementation  
+20222296                                                        69 7.2.2  Programming Languages  
+ 
+Python:  Selected as the primary language for the backend and machine learning components.  
+Python is the industry standard for Data Science and AI due to its extensive ecosystem of 
+libraries (Pandas, Scikit -learn). Its simplicity allows for rapid prototyping of complex 
+algorithmic logic.  
+JavaScript (ES6+):  Used for the frontend development.  
+JavaScript is the native language of the web, enabling dynamic, client -side interactivity 
+essential for a responsive dashboard.  
+CSS3:  Used for styling the user interface.  
+Modern CSS variables and Flexbox/Grid layouts were used to create a custom 
+"Glassmorphism" aesthetic without the overhead of heavy UI frameworks.  
+ 
+7.2.3  Development Framework  
+ 
+FastAPI (Backend):  A modern, high -performance web framework for building APIs with 
+Python.  
+Chosen over Flask or Django for its speed (Starlette -based) and automatic validation using 
+Python type hints. It natively supports asynchronous processing, which is beneficial for 
+handling ML inference requests concurrently.  
+React.js (Frontend):  A component -based JavaScript library for building user interfaces.  
+React's Virtual DOM ensures efficient rendering of dynamic charts and data tables. Its 
+component -based architecture makes the code modular and reusable (e.g., reusing the same 
+Chart component for different metrics).  
+7.2.4  Libraries/ Toolkits  
+ 
+1. XGBoost: The core machine learning library for regression forecasting.  
+• Justification: XGBoost (Extreme Gradient Boosting) was selected for its superior 
+performance on structured/tabular data compared to Deep Neural Networks, 
+which often require more data than is available in this context. It handles missing 
+values and non -linear relationships effectively.  
+2. SHAP (SHapley Additive exPlanations): used for model interpretability.  
+• Justification: Crucial for trust. It allows the system to explain why a forecast was 
+made, moving beyond "black box" predictions.  
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                         CHAPTER 07: Implementation  
+20222296                                                        70 3. Pandas & NumPy: Used for data manipulation and numerical analysis.  
+• Justification: Essential for the ETL (Extract, Transform, Load) process to clean 
+raw Excel files and structure them for the model.  
+ 
+7.2.5  Integrated Development Environment (IDEs)  
+Visual Studio Code (VS Code) : The primary IDE used for full -stack development.  
+Justification: VS Code offers excellent support for both Python and JavaScript ecosystems 
+via extensions. Features like the integrated terminal, IntelliSense (code completion), and 
+debugging tools streamlined the development workflow across both frontend a nd backend.  
+ 
+7.2.6  Summary of the Technology Selection  
+The technology selection prioritizes performance  and maintainability . Python and 
+XGBoost provide a robust engine for accurate forecasting, while FastAPI ensures these 
+insights are served with low latency. On the client side, React and Chart.js deliver a seamless, 
+app-like experience. This decoupled architecture (separate F rontend and Backend) allows for 
+independent scaling and maintenance of the user interface and the predictive core.  
+7.3 Core Functionalities Implementation  
+This section details how the core features of the SalesSense  system were developed, covering 
+data analysis, modular implementation, and system integration.  
+ 
+7.3.1 Exploratory Data Analysis (EDA)  
+➢ Before training the model, an exploratory analysis was conducted on the dataset 
+(generated from files/*.xlsx and april.csv) to understand sales distribution and identify 
+data quality issues.  
+➢ Dataset Declaration: The system utilizes a proprietary dataset of monthly sales 
+records from a retail spices sales shop . 
+➢ Dataset Size and Time Range:The dataset consists of 43 usable monthly records 
+covering the period from April 2022 to January 2026. The first three months were 
+excluded during preprocessing due to insufficient lag values required for feature 
+engineering.  
+➢ Data Split:Training Data ( 40 Months ): Used to teach the XGBoost model the 
+relationship between time (Month) and Revenue.  
+➢ Testing Data ( 3 Months ): Used to validate the model's accuracy on unseen future 
+months.  
+➢ Features Used:The final model was trained using the following features: MonthNum, 
+MonthOfYear, Lag1, Lag2, Lag3, RollingMean3, and RollingStd3. These features 
+were specifically engineered to capture temporal dependencies and seasonal patterns 
+in sales data . 
+ML-Based Sales Forecasting for Retail Spices                         CHAPTER 07: Implementation  
+20222296                                                        71 ➢ Feature Engineering:  
+To improve predictive performance, several time -series -based features were generated 
+from the original dataset. Lag features (Lag1, Lag2, Lag3) were created to capture 
+short -term dependencies between consecutive months. Rolling statistics such as 
+RollingMe an3 and RollingStd3 were introduced to represent local trends and 
+variability in sales. Additionally, MonthNum and MonthOfYear were included to 
+capture seasonality effects. These engineered features enable the model to better learn 
+non-linear patterns in the data.  
+ 
+7.3.2 Modular Development  
+The system is built using a modular architecture, ensuring that data processing, training, and 
+inference are loosely coupled.  
+A. Data Preprocessing Module (data_processor.py)  
+This module handles the "Extract, Transform, Load" (ETL) process. It reads raw, 
+unstructured Excel files and converts them into a clean CSV format.  
+Key Implementation: The process_dataframe function scans for the "Particulars" row to 
+identify the start of the data table, handling dynamic header positions found in manual 
+manual bookkeeping files.  
+ 
+ 
+ 
+ 
+ 
+ 
+
+ML-Based Sales Forecasting for Retail Spices                         CHAPTER 07: Implementation  
+20222296                                                        72 B. Prediction Engine (main.py)  
+This module wraps the XGBoost model within a FastAPI  endpoint. It trains the model on -
+the-fly when a request is received, ensuring the forecast always reflects the latest data.  
+➢ Model Training Process:The dataset was split into training and testing sets, where 
+approximately 80% of the data (40 months) was used for training and the remaining 
+20% (3 months) was used for testing. The XGBoost regressor was trained on the 
+training data set using the engineered features, and predictions were generated for the 
+test period as well as future months.  
+➢ Key Implementation: The /api/forecast endpoint prepares the data, trains the 
+XGBRegressor, and generates future indices for prediction.  
+➢ Model Optimization:Basic hyperparameter tuning was applied to improve model 
+performance and reduce overfitting. Parameters such as learning rate, number of 
+estimators, and maximum tree depth were adjusted. A lower learning rate was used to 
+ensure gradual l earning, while limiting tree depth helped prevent the model from 
+capturing noise in the small dataset. These adjustments improved generalization on 
+unseen data.  
+➢ Model Evaluation Metrics:The performance of the model was evaluated using 
+standard regression metrics, including Root Mean Squared Error (RMSE), Mean 
+Absolute Error (MAE), Mean Absolute Percentage Error (MAPE), and R -squared 
+(R²). These metrics provide ins ights into prediction accuracy and model reliability. 
+Detailed evaluation results are presented in Chapter 8.  
+➢ Model Explainability using SHAP:To enhance transparency, SHAP (SHapley 
+Additive Explanations) was integrated into the system to interpret model predictions. 
+SHAP values quantify the contribution of each feature toward the final prediction, 
+allowing users t o understand which factors influence sales forecasts. This improves 
+trust in the model and supports better decision -making for non -technical users.  
+ 
+ 
+
+ML-Based Sales Forecasting for Retail Spices                         CHAPTER 07: Implementation  
+20222296                                                        73  
+ 
+C. Inventory Logic Module  
+Integrated within the forecasting endpoint, this logic calculates the "Rate of Sale" for top 
+products to predict next month's demand.  
+ 
+ 
+ 
+ 
+ 
+
+ML-Based Sales Forecasting for Retail Spices                         CHAPTER 07: Implementation  
+20222296                                                        74  
+7.3.3 Code Structure & Organization  
+The codebase follows a clear separation of concerns pattern:  
+1.backend/: Contains all business logic and ML algorithms.  
+2.main.py: The Controller, handling API requests.  
+3.data_processor.py: The Service, handling data logic.  
+4.frontend/: Contains the presentation layer.  
+5.src/App.jsx: The View, responsible for rendering charts and managing state.  
+6.Design Pattern: The backend implements a Service -Controller pattern (implicitly), where  
+7.Data_processor.py acts as the service layer providing clean data to the main.py  controller. 
+The frontend uses the Component -Based pattern inherent to React.  
+ 
+ 
+7.3.4 Integration  
+Integration between the Frontend and Backend is achieved via RESTful APIs.  
+1.Request: The React frontend uses axios to send an HTTP GET request to 
+http://localhost:8000/api/forecast.  
+2.Processing: FastAPI receives the request, triggers the training pipeline in  
+main.py, and generates the JSON response.  
+3.Response: The JSON data (containing predictions and SHAP values) is sent back to the 
+frontend.  
+4.Rendering: React updates the state (setForecast), causing the react -chartjs -2 components to 
+re-render with the new data.  
+This seamless integration allows the complex ML operations to occur invisibly to the user, 
+who simply sees the dashboard update in real -time.  
+ 
+ 
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                         CHAPTER 07: Implementation  
+20222296                                                        75 7.4 User Interface Implementation  
+This section describes the implementation of the user interface (UI) of the SalesSense  system 
+and its integration with backend forecasting modules. The UI was developed as a simple 
+dashboard -based interface to enable retail stakeholders to generate forecasts, view model 
+performance, and interpret results without requiring technical knowledg e. 
+The user interface was implemented as a structured dashboard that integrates revenue 
+forecasting, model evaluation, inventory recommendations, and explainability into a unified 
+decision -support platform. The frontend includes a forecast trigger button, a s ix-month 
+revenue summary panel, historical vs predicted line chart visualizations, model performance 
+metrics (MAE, RMSE, MAPE), and a SHAP -based feature importance section to enhance 
+transparency. The frontend communicates with backend modules through stru ctured function 
+calls, where the trained XGBoost model is loaded, preprocessing and feature engineering are 
+applied, forecasts are generated, inventory recommendations are computed, and 
+explainability outputs are produced before returning results to the UI . Model serialization 
+ensures efficient runtime execution without retraining. Usability and accessibility were 
+prioritized through clear layout design, readable fonts, high contrast, minimal technical 
+terminology, and avoidance of color -only visual cues, e nsuring the system remains 
+understandable and accessible for SME stakeholders.  
+ 
+ 
+ 
+    Figure 13: UI Implementation  
+
+ML-Based Sales Forecasting for Retail Spices                         CHAPTER 07: Implementation  
+20222296                                                        76 7.5 Challenges and Solutions  
+This section is emphasized to show the technical challenges experienced in the process of 
+creating SalesSense and the engineering solutions that were adopted to address them.  
+ 
+7.5.1 Quality of Data and Inconsistency.  
+Challenge: Unstructured nature of the legacy data was the major challenge. All the source 
+files were the manually created Excel books of books (files/*/.xlsx) that were not made by 
+machines.  
+Problems: Combined rows, disparate date headers (e.g. one row says For April 2024 and 
+another April -24), and the rows with Particulars showing up with varying indices.  
+Impact: Standard library functions (such as pd.read_excel) were not able to read the tables, 
+and empty or misaligned datasets were obtained.  
+Solution: We adopted a home made Robust ETL Parser in data_processor.py  
+Dynamic Header Detection: The script does not predetermine the row number on which it 
+will look at the headers but scans the first 50 rows to find the keyword Particulars.  
+Regex Cleaning: A clean_value Regular Expression (re.search(r"([ \d.]+), s)) is a function 
+created to take a numerical value of a string such as 10 kgs or 1,200.00 and is capable of 
+overcoming the error of human formatting.  
+ 
+7.5.2 Overfitting of Model to Small Dataset.  
+Difficulty: The dataset used was monthly data in a limited number of years. Deep Learning 
+models (such as LSTMs) generally need thousands of observations to be generalized.  
+Impact: Early work with complex neural networks achieved poor performance as the model 
+overfitted, that is, it remembered the training data but could not make accurate predictions of 
+future trends.  
+Rationale: XGBoost (Extreme Gradient Boosting) was chosen over Deep Neural Network.  
+Why: XGBoost is an ensemble algorithm (a decision -tree) which works remarkably well with 
+a small, structured tabular data.  
+Regularization: To ensure that the model does not get too complicated, tuned 
+hyperparameters (learning rate 0.05, max depth=3) so that the model only learns the overall 
+trend and not noise.  
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                         CHAPTER 07: Implementation  
+20222296                                                        77 7.5.3 Frontend Backend Integration Latency.  
+Issue: On -the-fly model training when loading the dashboard would create a discernible 
+latency (delay) within the User Interface.  
+Impact: It took 1 -2 seconds before the backend responded to the data and trained the model 
+because it seemed that the dashboard was frozen.  
+Solution: We used Asynchronous State Management in the React Frontend 
+(<|human|>Solution: We had used Asynchronous State Management in the React Frontend (  
+App.jsx) and FastAPI Backend.  
+States Loading: The frontend now shows a visual loading Analytics Suite... indicator during 
+the process of getting data.  
+Async/Await: The integration is based on the pattern of parallel fetching the Summary and 
+Forecast data with axios.all which implements the concept of an async/await pattern in the 
+JavaScript language and shortens the overall wait time by about 40.  
+ 
+7.6 Chapter Summary  
+The chapter introduced the use of SalesSense forecasting system, which showed how the 
+design architecture was converted to a working prototype. The system was built on Python 
+and data science ecosystem, i.e., Pandas, XGBoost, Scikit -learn, SHAP, and visual ization 
+libraries. Data preprocessing, feature engineering, revenue forecasting, inventory 
+recommendation and explainability, are core modules and were implemented modularly and 
+integrated using a method of structured layer based approach. The main issues,  such as data 
+inconsistency, model tuning, small dataset size, and module integration were tackled by 
+systematic debugging, feature engineering, hyperparameter optimization, and model 
+serialization. The main functionalities are already implemented and inte grated, so the system 
+is currently ready to be validated and performance tested during the testing phase  
+ML-Based Sales Forecasting for Retail Spices                                       CHAPTER 08: Testing  

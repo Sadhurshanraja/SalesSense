@@ -1,0 +1,393 @@
+20222296                                                        78 Chapter 8 : Testing  
+8.1  Chapter Overview  
+This chapter comprises an in -depth analysis and validation of SalesSense system. In order to 
+make sure that the solution is appropriate to the issues of sales forecasting of the small scale 
+retail, a strict testing framework was used, divided into two main  aspects are Quantitative 
+Evaluation and Qualitative Evaluation.The Quantitative phase is concerned with the technical 
+validation of the Machine Learning models in question, to measure the predictive accuracy of 
+the XGBoost and other algorithms on the basi s of conventional statistical indicators. This 
+makes the model reliable enough to the financial and inventory planning requirements. 
+Qualitative stage will test the functional soundness of the system and the user experience 
+whereby the software prototype i s checked with the requirements of the stakeholders. 
+Through this systematic testing method, the project will exhibit not only the technical 
+strength but also the feasibility of the project within the real world business context.  
+ 
+8.2 Testing Criteria  
+The main aim of testing stage is to strictly test the SalesSense system and find out how it can 
+fulfill the technical requirements and business expectations. The particular aims of such testing 
+process are as follows:  
+• To Measure Accuracy of Prediction: To determine how accurate the machine learning 
+models are in predicting sales of spice shop. This is done by examining the proximity 
+between the forecasted values against past sales data using statistics.  
+• To Conduct Model Benchmarking: To conduct a comparative study of several 
+algorithms, i.e., XGBoost, Random Forest, Linear Regression and LSTM, in order to 
+determine which model is most robust to work with small -scale seasonal retail data.  
+• To Check System Functionality: To make sure that the end -to-end interaction between 
+the FastAPI backend and the React  frontend is functional, in particular, to check the 
+data processing, model triggering, and results visualization.  
+• To Assess System Performance and Usability: To test whether the system will respond 
+within reasonable time limits and whether the user interface can be used by non -
+technical stakeholders, i.e. shop managers.  
+• To Authenticate Business Intelligence Results: To assure the results of the derived 
+insights, including forecasting the profits, inventory needs, and analysis of cash flows, 
+are obtained in the proper manner of calculation in accordance with the volume of sales 
+forecasted, and availing an actionable information to make the decision.  
+ 
+ 
+ 
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                                       CHAPTER 08: Testing  
+20222296                                                        79 8.3 Model Testing  
+We tested the machine learning model to see if it could accurately predict future monthly 
+sales values based on past data. Because this is a regression problem, we used the right 
+regression -based evaluation metrics to figure out how accurate the prediction s were.The 
+model uses time -series data like past sales (lag values), seasonal indicators, and rolling 
+statistics to predict the total sales for the next month.  
+Evaluation Metrics  
+1.Mean Absolute Error (MAE)  
+MAE measures the average absolute difference between actual and predicted values.  
+2.Root Mean Square Error (RMSE)  
+RMSE measures the square root of the average squared differences between predicted 
+and actual values. It penalizes larger errors more heavily.  
+3.Mean Absolute Percentage Error (MAPE)  
+MAPE represents the prediction error as a percentage.  
+4.R-squared (R² Score)  
+R² indicates how well the model explains the variance in the data.  
+ 
+Experiment Setup  
+The model was trained using 4 3 months of historical sales data(2022 April  – 2025 October ) 
+and tested on 3 months (November 2025, December 2025, and January 2026). A time -based 
+split was used to preserve the sequential nature of the data.  
+ 
+Experimental Results (Final Model – XGBoost)  
+ 
+Metric  Value  
+RMSE  714,087  
+MAE  691,651  
+MAPE  12.3%  
+R² Score  0.2426  
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                                       CHAPTER 08: Testing  
+20222296                                                        80 The results indicate that the XGBoost model achieves a reasonable level of prediction 
+accuracy. The MAPE value of 12.3% suggests that the model’s predictions deviate by 
+approximately 12% from actual sales values on average.  
+ 
+Figure 14.: Actual vs Predicted Sales using XGBoost Model  
+The figure above shows the difference between the actual and predicted sales values for the 
+test period. The model does a good job of showing the overall trend in sales, but there are 
+some differences between the predicted and actual values. These differen ces are to be 
+expected because the dataset is small and there are no outside factors like promotions or 
+market conditions. But the model does show a fair amount of accuracy and trend alignment.  
+ 
+8.4 Benchmarking  
+ 
+Model  RMSE  MAE  MAPE  R² 
+XGBoost  714,087  691,651  12.3%  0.2426  
+Random Forest  721,883  718,234  13.2%  0.2260  
+Linear Regression  720,597  712,202  13.1%  0.2287  
+LSTM  5,584,060  5,523,448  100.0%  -45.3162  
+Table 16: Benchmarking Table  
+The benchmarking results indicate that the XGBoost model achieved the best overall 
+performance among the evaluated models. It recorded the lowest RMSE, MAE, and MAPE 
+values, demonstrating higher prediction accuracy compared to the other models. The results 
+from Random Forest and Linear Regression were pretty similar, but their error metrics were a 
+little higher than those from XGBoost, which means they didn't do as well. These models could 
+find general patterns, but they weren't as good at reduci ng predictio n error.The LSTM model 
+
+ML-Based Sales Forecasting for Retail Spices                                       CHAPTER 08: Testing  
+20222296                                                        81 did a lot worse, with very high error values and a negative R² score. This is mostly because the 
+dataset is small, and deep learning models usually need bigger datasets to work well.  
+The selection process also took into account how easy it was to understand the model, in 
+addition to how accurate it was. We chose XGBoost because it works well with SHAP(SHapley 
+Additive Explanations), which makes it easy to explain how features affect pr edictions. This 
+makes things more open and helps users make better choices. Overall, XGBoost was selected 
+as the final model due to its superior accuracy, robustness on small datasets, and strong 
+explainability through SHAP.  
+ 
+8.5 Functional Testing  
+Functional testing was conducted to verify that all core features of the SalesSense system 
+operate according to the defined functional requirements. The testing was performed on the 
+developed prototype by executing predefined test cases derived from system  functionalities 
+such as data upload, processing, forecasting, and dashboard outputs.  
+ 
+Test 
+Case 
+ID Feature / 
+Component  Description  Expected 
+Result  Actual Result  Status  
+TC01  File Upload  Uploading the raw 
+Excel/CSV 
+transaction records 
+to the system.  System 
+accepts file 
+and saves it to 
+the temporary 
+directory.  File uploaded 
+successfully to the 
+backend.  Pass  
+TC02  Data 
+Processing  Triggering the 
+data_processor.py 
+to clean and 
+structure raw data.  System 
+handles 
+missing values 
+and 
+standardizes 
+date formats.  Cleaned dataset 
+(cleaned_all.csv) 
+generated 
+correctly.  Pass  
+TC03  Sales Data 
+API Fetching historical 
+processed data via 
+the /sales endpoint.  API returns a 
+valid JSON 
+response 
+containing past 
+sales records.  Correct historical 
+data retrieved in 
+JSON format.  Pass  
+ML-Based Sales Forecasting for Retail Spices                                       CHAPTER 08: Testing  
+20222296                                                        82 Test 
+Case 
+ID Feature / 
+Component  Description  Expected 
+Result  Actual Result  Status  
+TC04  Forecast 
+API Requesting a 6 -
+month prediction 
+using the XGBoost 
+model.  API returns 
+future sales 
+values based 
+on the trained 
+model.  6-month forecast 
+generated and 
+returned 
+successfully.  Pass  
+TC05  Business 
+Summary  Generating the 
+dashboard overview 
+(Profit, Revenue, 
+Trends).  Dashboard 
+displays 
+calculated 
+metrics based 
+on forecast.  Correct financial 
+summary 
+displayed on the 
+UI. Pass  
+TC06  Product 
+Analytics  Identifying the 
+highest -performing 
+spice products.  System lists 
+top products 
+by quantity 
+and value.  Correct top -
+product rankings 
+displayed.  Pass  
+Table 17 :Functional Testing  
+Test Results  
+All functional test cases were executed successfully, and the system produced the expected 
+outputs in all the scenarios.  
+Pass Rate Calculation  
+Total Test Cases = 6  
+Passed = 6  
+Failed = 0  
+Pass Rate = (Passed / Total) × 100  
+➢ Pass Rate = (6 / 6) × 100 = 100%  
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                                       CHAPTER 08: Testing  
+20222296                                                        83 8.6  Non - Functional Testing  
+Functional testing was conducted in alignment with the system requirements defined in 
+Chapter 4 (SRS).  The testing focused on verifying core functionalities of the SalesSense 
+system, including data upload, data processing, forecast generation, and dashboard outputs. 
+Each function was tested using predefined test cases to ensure that the system produces 
+correct and expected results.  
+ 
+8.7   Limitations of the testing process  
+There were a number of limitations in the testing process. The major weakness is the very 
+limited dataset that was used to train and evaluate the model and only 43 months of historical 
+data were involved. This limits the learning capabilities of the model to complex patterns and 
+can influence the accuracy of prediction. Moreover, the lack of empirical expenditure and 
+cost information restricted the analysis of the output in terms of finance like the estimation of 
+profits and cash flow analysis. Moreover, th e dataset did not include other external variables 
+like promotions, market trends, and seasonal events, which can affect the accuracy of the 
+predictions. Notwithstanding these constraints, the testing process offers reasonable idea 
+about the performance of  the system in the constraints given.  
+ 
+8.8   Chapter Summary  
+The chapter described the process of testing and validation of the SalesSense system in the 
+quantitative and qualitative methods. The machine learning model has been tested with 
+conventional regression measurements and benchmarking has been done to ensure that the 
+XGBoost has been chosen as the most appropriate model. Non -functional testing revealed that 
+the system features are functioning as expected, functional testing confirmed that the system 
+functions as expected, and its performance, accuracy, and usa bility were acceptable. The 
+general findings, even though they have certain limitations caused by the limited data set and 
+cost data, suggest that the system is trustworthy and can be utilized in a real -life context in 
+retail forecasting.  
+ 
+ 
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 09: Critical Evaluation  
+20222296                                                        84 Chapter 9 : Critical Evaluation  
+ 
+9.1   Chapter Overview  
+In this chapter, the critical analysis of SalesSense  system is provided which is based on the 
+evaluation of its efficiency, usability, and real practical use within a real life retail situation. 
+The analysis is based on a qualitative and quantitative integration, which consists of analysis 
+of the performanc e of the system and user feedback. The objective is to establish the extent to 
+which the system addresses its purposes and aids decision -making to the retail clients.  
+ 
+9.2   Evaluation Methodology and Approach  
+The critical evaluation stage is to evaluate the general effectiveness and applicability of 
+developed system in addition to technical implementation. Although the testing phase was 
+aimed at testing the functionality of the system and determining the accura cy of the model, 
+this phase determines the usefulness and reliability of the system to the user and the business.  
+The assessment was done through a qualitative method where the factor that was evaluated 
+was the interaction of the user with the system, ease of use of the interface, effectiveness of 
+the output, and usefulness of the produced predictions. The system was evaluated in the 
+extent that it assists in making major business decisions including sales forecasting, inventory 
+planning, and financial estimation.  
+Further on, quantitative outcomes of model performance measures were also included to 
+facilitate the review so that both the accuracy and usability factors are put into consideration. 
+This integrated method is a comprehensive analysis of the system in term s of its practical 
+value.  
+ 
+9.3   Evaluation Criteria  
+The evaluation of the SalesSense system was conducted based on the following key criteria:  
+1. Accuracy  – The ability of the model to predict future sales values with acceptable 
+error margins measured by using metrics such as RMSE, MAE, and MAPE.  
+2. Usability  – how easy it is to use the system interface, how clear the visualisations are, 
+and how easy it is for people who aren't tech -savvy, like shop owners, to use.   
+3. Technical Robustness  – The reliability, performance, and scalability of the system, 
+including API responsiveness and data processing efficiency.  
+4. Business Value  – How useful the system is for helping people make decisions, 
+especially when it comes to predicting sales, planning inventory, and estimating costs.  
+ 
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 09: Critical Evaluation  
+20222296                                                        85 9.4   Self-Evaluation  
+Strengths  
+1. Effective Model Selection – XGBoost had the best performance (MAPE: 12.3%), 
+showing that it can handle small time -series datasets very well.  
+2. End-to-End System Integration – The system uses FastAPI  and React to combine data 
+processing, prediction, and visualisation into a single workflow.  
+3. Explainability (SHAP Integration) – Adding SHAP makes things clearer by showing 
+how features affect predictions.  
+4. User -Friendly Interface – The dashboard is easy to understand,  making it accessible 
+for non -technical users.  
+Weaknesses  
+1. Limited Dataset – The model was trained on only 43 months of data, which makes it 
+harder for it to learn complicated  
+2. Lack of Cost/Expenditure Data – Financial results like profit are based on guesses, not 
+real data  
+3. Exclusion of External Factors – Variables such as promotions, holidays, and market 
+trends were not included, affecting prediction accuracy.  
+4. Scalability Constraints – The current system works best with small datasets, so it may 
+need to be improved for larger deployments.  
+ 
+9.5   Selection of the Evaluators  
+ 
+Domain Experts   
+• Profile: Retail shop owners/business  users  
+• Rationale: Provide insights on the practicality, usability, and business significance  of 
+the system  
+Technical Experts   
+• Profile: Developers, data science or IT background individuals  
+• Rationale: Evaluate system architecture, implementation quality and model 
+performance  
+Focus Group   
+• Profile: General users interacting with the system (e.g., staff or students)  
+• Rationale: user experience, interface clarity, and usability  
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 09: Critical Evaluation  
+20222296                                                        86 9.6   Evaluation Results  
+ 
+9.6.1  Expert Opinion   
+9.6.1.1 Domain Experts  
+Concept  
+• The system was considered useful for improving decision -making in small retail 
+businesses  
+• The focus on sales forecasting and inventory planning was seen as practical and 
+relevant  
+Solution  
+• The forecasting results were considered reasonably accurate and useful for planning  
+• Suggested inclusion of additional features such as expense tracking for better 
+financial insights  
+ 
+9.6.1.2  Technical Experts  
+Scope  
+• The system was recognized as a complete end -to-end solution combining ML and 
+web technologies  
+• Suggested extending the system with more advanced forecasting models or additional 
+datasets  
+Architecture of the Solution  
+• The FastAPI and React -based architecture was considered lightweight and efficient  
+• Recommendation to improve scalability for handling larger datasets  
+Implementation of the Solution  
+• The implementation was considered clean and modular  
+• Suggested improvements such as deployment optimization and enhanced security 
+mechanisms  
+ 
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 09: Critical Evaluation  
+20222296                                                        87 9.6.2 Focus Group Testing  
+Prototype Features  
+• Most users found the forecasting and summary features useful for understanding sales 
+trends  
+• Suggested adding more customization options for reports and outputs  
+Usability  
+• The majority of users found the interface easy to use and understand  
+• Some users suggested improving visual clarity and adding more guidance for first -
+time users  
+ 
+9.7 Limitations of Evaluation  
+There were a number of limitations with the evaluation process. The most obvious weakness 
+is the limited size of the dataset that is utilized in the testing and it might influence the 
+credibility of the evaluation findings. Also, there was no actual cost a nd expenditure data, 
+which restricted the possibility of completely assessing such financial outputs as profit and 
+cash flow. It was also evaluated on a small number of users which might not be a complete 
+picture of what would happen in the real life in va rious business contexts. Also, the external 
+factors which can affect the overall effectiveness of the system like promotions, seasonal 
+events, and market conditions were not taken into consideration during the evaluation 
+process. In spite of these shortcom ings, the evaluation gives a fair evaluation of the 
+performance of the system in practice.  
+ 
+9.8 Functional and Non -Functional Requirements Implementation  
+The SalesSense system developed is able to utilise the functional and non -functional 
+requirements as presented in Chapter 4 . All the key functional requirements, such as data 
+upload, data processing, sales forecasting, and dashboard visualization were implemented and 
+tested in terms of functionality.  
+Regarding the non -functional requirements, the system performs reasonably well in the sense 
+that it can make predictions in a short period, and it has a fair degree of accuracy based on 
+MAPE of 12.3%. It is also user friendly because the system can be used  by non technical and 
+can also be scaled up to small to medium datasets. Also, interpretability is ensured by the 
+incorporation of SHAP, which allows explaining model predictions in a transparent way.  
+In general, the system satisfies most of the outlined requirements, but it has certain 
+drawbacks in such aspects as large -data scalability and access to financial data.  
+ 
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 09: Critical Evaluation  
+20222296                                                        88 9.9 Chapter Summary  
+The SalesSense system developed is able to utilise the functional and non -functional 
+requirements as presented in Chapter 4. All the key functional requirements, such as data 
+upload, data processing, sales forecasting, and dashboard visualization were impl emented and 
+tested in terms of functionality. Regarding the non -functional requirements, the system 
+performs reasonably well in the sense that it can make predictions in a short period, and it has 
+a fair degree of accuracy based on MAPE of 12.3%. It is als o user friendly because the 
+system can be used by non technical and can also be scaled up to small to medium datasets. 
+Also, interpretability is ensured by the incorporation of SHAP, which allows explaining 
+model predictions in a transparent way. In genera l, the system satisfies most of the outlined 
+requirements, but it has certain drawbacks in such aspects as large -data scalability and access 
+to financial data. 
+ML-Based Sales Forecasting for Retail Spices                                 CHAPTER 10: Conclusion  

@@ -1,0 +1,189 @@
+
+--- Slide 1 ---
+SalesSense ML-Based Sales Forecasting
+Final Year Project
+Sadhurshan Rajendran (20222296 / w1989004)
+Supervisor: Miss. Akarshani Ramanayake
+Informatics Institute of Technology (IIT) in collaboration with University of Westminster
+
+--- Slide 2 ---
+Context
+Problem background, Research Gap & Aim
+Technical
+System Design, Tech Stack & AI Model details
+Validation
+Prototype Demo, Evaluation & Testing
+Contribution
+Project Novelty & Key Contributions
+Future
+Limitations & Future Work roadmap
+Summary
+Conclusion & Skills assessment
+PRESENTATION AGENDA
+
+--- Slide 3 ---
+THE PROBLEM
+The Core Problem
+Small-scale specialty spice retailers lack reliable, data-driven forecasting solutions, leading to costly inventory mismanagement (overstocking perishable goods or understocking resulting in missed sales).
+Failure of Traditional Methods
+"Traditional models frequently yield low explanatory power for complex retail dynamics." (Ganguly & Mukherjee, 2024)
+Relying on manual estimation and basic statistical models fails to capture complex, seasonal, and non-linear sales patterns.
+→
+→
+
+--- Slide 4 ---
+Generalized Data
+Existing studies rely on massive datasets (Walmart), overlooking constraints like perishability in niche spice retail.
+Operational Gap
+Prior research neglects integrating high-accuracy predictions into daily operational planning (Venkiteela, 2025).
+Interpretability
+High-performing models like XGBoost are often "Black-Boxes", reducing manager trust (Davinder Pal Singh, 2023).
+CRITICAL RESEARCH GAPS
+
+--- Slide 5 ---
+Goal: Design, Develop, and Evaluate a 6-Month Multi-Step Sales Forecasting System
+Advanced Modeling: Utilize XGBoost to capture non-linear patterns.
+Transparent AI: Provide interpretable outputs using SHAP values.
+Decision Support: Enable scenario-based financial and cash-flow analysis & supportive inventory planning
+→
+→
+→
+PRIMARY PROJECT AIM
+
+--- Slide 6 ---
+Multi-Tiered Layering
+Data Pipeline: Ingestion, preprocessing, and lag-feature engineering.
+ML Engine: XGBoost forecasting paired with SHAP explainability layer.
+Business Logic: Translating volume forecasts into cash-flow and inventory metrics.
+UI Layer: Interactive React dashboards for scenario planning.
+→
+→
+→
+→
+SYSTEM ARCHITECTURE
+
+--- Slide 7 ---
+Modern Web & AI Stack
+Frontend: React.js / Vite with Dynamic Dashboards.
+Backend: FastAPI for efficient routing and high performance.
+ML Core: Pandas, Scikit-Learn, XGBoost.
+Explainability: SHAP (Shapley Additive Explanations).
+→
+→
+→
+→
+IMPLEMENTATION STACK
+
+--- Slide 8 ---
+Data & Feature Engineering
+Source: Historical transactional data from a single-store specialty shop.
+Engineering: Time-based lags to capture seasonality (e.g., cultural festivals).
+Model Selection: Benchmarked XGBoost against LSTM and Random Forest.
+Optimization: Cross-validation for 6-month multi-step horizons.
+→
+→
+→
+→
+MODEL PIPELINE & DATA
+Dataset & ETL
+Source: Proprietary unstructured records from a spice shop.Size: 43 monthly records (April 2022 – Jan 2026). Split 40:3.Custom ETL: Parser with regex and dynamic header detection to clean inconsistent Excel bookkeeping files.
+Feature Engineering
+Short-term: Generated Lag1, Lag2, Lag3.Trends: RollingMean3, RollingStd3.Seasonality: MonthNum, MonthOfYear features.
+Model & Training
+Algorithm: XGBoost selected for superior performance on small tabular data over LSTMs.Tuning: Strict regularization (LR=0.05, Depth=3) to prevent overfitting to SME noise.
+Experiments
+Comparative: RF, Linear Regression, and LSTM tested before finalizing XGBoost.Real-time Architecture: FastAPI asynchronous state management for on-the-fly training upon data upload.
+AI/ML Modal Pipeline & Details
+
+
+--- Slide 9 ---
+Core Dashboard Features
+Forecasting: Visualizing 6-Month sales trajectories.
+Explainability: SHAP Dashboard showing feature impact on individual predictions.
+Financials: Scenario-based adjustment of business parameters.
+Actionable: Automatic translation to inventory requirements.
+→
+→
+→
+→
+SYSTEM DEMONSTRATION
+
+--- Slide 10 ---
+Outcome: XGBoost effectively balanced linear trends and high seasonality over the horizon. Proved that engineered lag features enable high performance without "Big Data" infrastructure.
+EVALUATION METRICS
+A. Evaluation Conducted
+
+Quantitative: 43 months data training vs 3 months test. Metrics: RMSE, MAE, MAPE, R² Score.Qualitative: Functional Testing (100% Pass) & User Focus Group validation.
+B. Outcomes & Contributions
+
+Superiority: XGBoost outperformed RF & LR. LSTM failed due to small dataset size.Contribution: Bridged gap between statistics and business value through automated inventory & cash flow translation.
+ Challenge: Sparse 43-month dataset and limited empirical expenditure data.
+12.3%
+MAPE ERROR
+714k
+RMSE METRIC
+Testing & Evaluation
+
+--- Slide 11 ---
+Actionable Value
+Systematically translates ML forecasts into immediate inventory levels and cash flow scenarios.
+Transparent AI
+Integrating SHAP in a small retail context to break the "Black-Box" and foster SME user trust.
+Dynamic Framework
+Interactive "What-If" scenarios allowing owners to adjust costs against predicted trajectories.
+PROJECT NOVELTY
+
+--- Slide 12 ---
+Current Limitations
+Future Work
+Small historical dataset from a single entity.
+No real-time external data stream ingestion.
+Macroeconomic & Social media trend integration.
+Multi-tenant SaaS platform expansion.
+Automated POS data ingestion.
+→
+→
+→
+→
+→
+GROWTH & CONSTRAINTS
+
+--- Slide 13 ---
+Advanced New Skills
+Applied Existing Skills
+XGBoost Mastery: Hyperparameter tuning & multi-step forecasting.
+AI Explainability: SHAP integration.
+Financial UI: Translating ML logic into finance dashboards.
+Full-stack Software Engineering.
+System Architecture & API Development.
+Database Management.
+→
+→
+→
+→
+→
+→
+SKILL ASSESSMENT
+Professional Competencies
+New Skills Developed:
+Utilized Foundation:
+Final Strategic Summary
+•
+Advanced ML (XGBoost & Tuning)
+•
+Model Interpretability (SHAP)
+•
+Real-time Financial UI Development
+•
+Full-stack Software Engineering
+•
+Architecture & API Development
+Bridge the Gap: Successfully connected complex ML forecasting with practical SME usability.
+Interpretable Tool: Developed a highly accurate tool tailored specifically for the spice retail domain.
+Structured Strategy: Established a methodology for turning theoretical data into proactive business strategies.
+Conclusion & Summary
+
+--- Slide 14 ---
+THANK YOU
+Questions & Answers
+Sadhurshan Rajendran | SalesSense Project

@@ -1,0 +1,3432 @@
+ 
+ 
+INFORMATICS INSTITUTE OF TECHNOLOGY  
+In Collaboration with  
+UNIVERSITY OF WESTMINSTER  
+ 
+SalesSense  
+Machine Learning Based Sales Forecasting for Retails Shops  
+ 
+ 
+A Project by  
+SADHURSHAN RAJENDRAN  
+ 
+Supervised by  
+Miss. AKARSHANI RAMANAYAKE  
+ 
+ 
+ 
+March 2026
+
+ML-Based Sales Forecasting for Retail Spices  
+ABSTRACT  
+ 
+This project addresses the challenge of inaccurate sales forecasting in small -scale retail 
+businesses, particularly in niche domains such as spice retailing, where poor predictions lead 
+to inefficient inventory management and suboptimal decision -making. Th e study proposes a 
+machine learning –based approach using the XGBoost regression model to generate accurate 
+six-month sales forecasts from historical data.To improve model reliability, time -based and 
+lag features are engineered to capture seasonal patterns and temporal dependencies. The 
+system further incorporates SHAP -based interpretability to explain model predictions and 
+enhance transparency for non -technical users. In addition, a scenario -based component is 
+included to allow users to adjust business para meters and explore different forecasting 
+outcomes.The results demonstrate that the proposed approach provides a practical and 
+interpretable solution for supporting inventory planning and data -driven decision -making in 
+small retail environments.  
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 01: INTRODUCTION
+        
+20222296                                                            1   
+TABLE OF CONTENTS  
+ABSTRACT  ................................ ................................ ................................ ...........................  1 
+TABLE OF CONTENTS  ................................ ................................ ................................ ...........  1 
+LIST OF FIGURES  ................................ ................................ ................................ ...................  6 
+LIST OF TABLES  ................................ ................................ ................................ .....................  7 
+LIST OF ABBREVIATIONS  ................................ ................................ ................................ .... 8 
+CHAPTER 01: INTRODUCTION  ................................ ................................ ............................  9 
+1.1 Chapter Overview  ................................ ................................ ................................ ...... 9 
+1.2 Problem Background  ................................ ................................ ................................ . 9 
+1.2.1 Challenges Faced by Small Retail Businesses  ................................ ..........................  9 
+1.2.2 Limitations of Traditional Forecasting Techniques  ................................ ................  10 
+1.2.3 The Need for Machine Learning -Based Forecasting  ................................ ..............  10 
+1.3 Problem Definition ................................ ................................ ................................ .........  11 
+1.3.1 Problem Statement  ................................ ................................ ................................ .. 11 
+1.4 Research Motivation  ................................ ................................ ................................  11 
+1.5 Existing Work  ................................ ................................ ................................ ................  11 
+Table 1 - Existing works  ................................ ................................ ................................ ...... 12 
+1.6 Research Gap  ................................ ................................ ................................ .................  13 
+1.7 Contribution to Body of Knowledge ................................ ................................ ..............  13 
+1.7.1  Problem Domain Contribution  ................................ ................................ .........  13 
+1.7.2  Research Domain Cont ributio n................................ ................................ ........  13 
+1.8 Research Challenges  ................................ ................................ ................................  14 
+1.9 Research Questions  ................................ ................................ ................................ ........  15 
+1.10 Research Aim  ................................ ................................ ................................ ...............  15 
+1.11 Research Objectives  ................................ ................................ ................................ ..... 15 
+1.12 Project Scope  ................................ ................................ ................................ ...............  17 
+1.13 Hardware/Software Requirements  ................................ ................................ ...............  18 
+1.14 Chapter Summary  ................................ ................................ ................................ ........  19 
+Chapter 2: Literature Review  ................................ ................................ ................................ ... 14 
+2.1 Chapter Overview  ................................ ................................ ................................ ..........  14 
+2.2 Problem Domain  ................................ ................................ ................................ ............  14 
+2.2.1 The Challenge of Retail Sales as a Time Series Problem  ................................ ....... 14 
+2.2.2 Progression from Statistical Models to Machine Learning  ................................ ..... 15 
+2.2.3 Justification for Business -Oriented Outputs  ................................ ...........................  15 
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 01: INTRODUCTION
+        
+20222296                                                            2 2.2.4 Research Gaps Addressed by the Proposed Project  ................................ ................  16 
+2.3 Existing Work  ................................ ................................ ................................ ................  17 
+2.4 Dataset Selection  ................................ ................................ ................................ ............  19 
+2.5 Benchmarking and Evaluation  ................................ ................................ .......................  20 
+2.5.1 Performance Metrics  ................................ ................................ ...............................  20 
+2.6 Chapter Summary  ................................ ................................ ................................ ..........  22 
+Chapter 03: Methodology  ................................ ................................ ................................ ........  23 
+3.1 Chapter Overview  ................................ ................................ ................................ ..........  23 
+3.2 Research Methodology  ................................ ................................ ................................ .. 23 
+3.3 Development Methodology  ................................ ................................ ...........................  25 
+3.3.1 Requirement Elicitation Methodology  ................................ ................................ .... 25 
+3.3.2 Design Methodology  ................................ ................................ ...............................  26 
+3.3.3 Programming Paradigm  ................................ ................................ ..........................  26 
+3.3.4 Testing Methodology  ................................ ................................ ..............................  26 
+3.3.5 Solution Methodology  ................................ ................................ ............................  26 
+3.4 Project Management Methodology  ................................ ................................ ................  27 
+3.4.2 Schedule  ................................ ................................ ................................ ..................  27 
+3.4.2.1 Gantt Chart  ................................ ................................ ................................ ....... 27 
+3.4.2.2 Deliverables  ................................ ................................ ................................ ..... 27 
+3.4.3 Resource Requirements  ................................ ................................ ..............................  28 
+3.4.3.1 Data  ................................ ................................ ................................ ......................  28 
+3.4.3.2 Skills  ................................ ................................ ................................ ....................  28 
+3.4.4 Risk and Mitigation ................................ ................................ ................................ . 29 
+3.5 Chapter Summary  ................................ ................................ ................................ ..........  30 
+Chapter 04: System Requirement Specification (SRS)  ................................ ...........................  31 
+4.1 Chapter Overview  ................................ ................................ ................................ ..........  31 
+4.2 Rich Picture Diagram  ................................ ................................ ................................ ..... 31 
+4.3 Stakeholder Analysis  ................................ ................................ ................................ ..... 32 
+4.3.1 Stakeholder Onion Model  ................................ ................................ .......................  32 
+4.3.2 Stakeholder Viewpoints  ................................ ................................ ..........................  33 
+4.4 Selection of Requirement Elicitation Methodologies  ................................ ....................  35 
+4.5 Discussion of Findings  ................................ ................................ ................................ ... 36 
+4.5.1 Literature Review Findings ................................ ................................ .....................  36 
+4.5.2 Survey Findings  ................................ ................................ ................................ ...... 37 
+4.5.3 Brainstorming/Observation  ................................ ................................ .....................  41 
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 01: INTRODUCTION
+        
+20222296                                                            3 4.6 Summary of Findings  ................................ ................................ ................................ ..... 41 
+4.7 Context Diagram  ................................ ................................ ................................ ............  42 
+4.8 Use Case Diagram ................................ ................................ ................................ ..........  42 
+4.9 Use Case Descriptions  ................................ ................................ ................................ ... 43 
+4.10 Requirements  ................................ ................................ ................................ ...............  47 
+4.10.1 Functional Requirements  ................................ ................................ ......................  47 
+4.10.2 Non -Functional Requirements  ................................ ................................ ..............  48 
+4.11 Chapter Summary  ................................ ................................ ................................ ........  49 
+Chapter 5: Social, Legal, Ethical and Professional issues (SLEP)  ................................ ..........  50 
+5.1 Chapter overview  ................................ ................................ ................................ ..... 50 
+5.2 SLEP issues and mitigation  ................................ ................................ .....................  51 
+5.3 Chapter summary  ................................ ................................ ................................ ..... 54 
+Chapter 6 : Design  ................................ ................................ ................................ ...................  55 
+6.1 Chapter Overview  ................................ ................................ ................................ ..........  55 
+6.2 Design Goals  ................................ ................................ ................................ ..................  55 
+6.3 System Architecture Diagram  ................................ ................................ ........................  57 
+6.4 Detailed Design  ................................ ................................ ................................ ..............  59 
+6.5  Algorithm Design ................................ ................................ ................................ ..........  64 
+6.6  UI Design  ................................ ................................ ................................ ......................  66 
+6.7  Chapter Summary  ................................ ................................ ................................ .........  67 
+Chapter 7: Implementation  ................................ ................................ ................................ ...... 68 
+7.1 Chapter Overview  ................................ ................................ ................................ ..........  68 
+7.2 Technology Selection ................................ ................................ ................................ ..... 68 
+7.2.1  Technology Stack ................................ ................................ .............................  68 
+7.2.2  Programming Languages  ................................ ................................ .................  69 
+7.2.3  Development Framework ................................ ................................ .................  69 
+7.2.4  Libraries/ Toolkits  ................................ ................................ ............................  69 
+7.2.5  Integrated Development Environment (IDEs)  ................................ .................  70 
+7.2.6  Summary of the Technology Selection  ................................ ............................  70 
+7.3 Core Functionalities Implementation  ................................ ................................ .............  70 
+7.3.1 Exploratory Data Analysis (EDA)  ................................ ................................ ..........  70 
+7.3.3 Code Structure & Organization  ................................ ................................ ..............  74 
+7.3.4 Integration  ................................ ................................ ................................ ...............  74 
+7.4 User Interface Implementation  ................................ ................................ ......................  75 
+7.5 Challenges and Solutions  ................................ ................................ ...............................  76 
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 01: INTRODUCTION
+        
+20222296                                                            4 7.5.1 Quality of Data and Inconsistency.  ................................ ................................ .........  76 
+7.5.2 Overfitting of Model to Small Dataset. ................................ ................................ ... 76 
+7.5.3 Frontend Backend Integration Latency.  ................................ ................................ .. 77 
+7.6 Chapter Summary  ................................ ................................ ................................ ..............  77 
+Chapter 8 : Testing  ................................ ................................ ................................ ...................  78 
+8.1  Chapter Overview  ................................ ................................ ................................ .........  78 
+8.2 Testing Criteria  ................................ ................................ ................................ ..............  78 
+8.3 Model Testing  ................................ ................................ ................................ ................  79 
+8.4 Benchmarking  ................................ ................................ ................................ ................  80 
+8.5 Functional Testing  ................................ ................................ ................................ .........  81 
+8.6  Non - Functional Testing  ................................ ................................ ..............................  83 
+8.7   Limitations of the testing process  ................................ ................................ ................  83 
+8.8   Chapter Summary  ................................ ................................ ................................ ........  83 
+Chapter 9 : Critical Evaluation  ................................ ................................ ................................  84 
+9.1   Chapter Overview  ................................ ................................ ................................ ........  84 
+9.2   Evaluation Methodology and Approach  ................................ ................................ ...... 84 
+9.3   Evaluation Criteria  ................................ ................................ ................................ ....... 84 
+9.4   Self-Evaluation  ................................ ................................ ................................ ............  85 
+9.5   Selection of the Evaluators  ................................ ................................ ..........................  85 
+9.6   Evaluation Results  ................................ ................................ ................................ ....... 86 
+9.6.1  Expert Opinion  ................................ ................................ ................................ . 86 
+9.6.1.1  Domain Experts  ................................ ................................ ...............................  86 
+9.6.1.2  Technical Experts ................................ ................................ .............................  86 
+9.6.2  Focus Group Testing  ................................ ................................ ........................  87 
+9.7 Limitations of Evaluation  ................................ ................................ ........................  87 
+9.8 Functional and Non -Functional Requirements Implementation  ..............................  87 
+9.9 Chapter Summary  ................................ ................................ ................................ .... 88 
+Chapter 10 : Conclusion ................................ ................................ ................................ ...........  89 
+10.1 Chapter Overview  ................................ ................................ ................................ ........  89 
+10.2 Achievements of Research Aims & Objectives  ................................ ...........................  89 
+10.3 Utilization of Knowledge from the Course  ................................ ................................ .. 90 
+10.4 Use of Existing Skills ................................ ................................ ................................ ... 90 
+10.5 Use of New Skills  ................................ ................................ ................................ ........  90 
+10.6 Achievement of Learning Outcomes  ................................ ................................ ...........  91 
+10.7 Problems and Challenges Faced  ................................ ................................ ..................  91 
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 01: INTRODUCTION
+        
+20222296                                                            5 10.8 Deviations  ................................ ................................ ................................ ....................  91 
+10.9 Limitations of the Research  ................................ ................................ .........................  92 
+10.10  Future Enhancements  ................................ ................................ ................................ . 92 
+10.11  Achievement of the contribution to body of knowledge  ................................ ...........  92 
+10.12  Concluding Remarks  ................................ ................................ ................................ .. 93 
+Time Schedule  ................................ ................................ ................................ .........................  94 
+REFERENCES  ................................ ................................ ................................ ........................  95 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 01: INTRODUCTION
+        
+20222296                                                            6 LIST OF FIGURES  
+ 
+Figure 1 - Rich Picture Diagram  …………………………………………………………...   33 
+Figure 2 - Onion Modal Diagram  ………………………………………………………….   34 
+Figure 3 - Context Diagram  ………………………………………………………………..   44 
+Figure 4 - Use Case Diagram  ………………………………………………………  ……...   44 
+Figure 5 - Gantt Chart ……………………………………………………………………...   51 
+Figure 6 - Proof of Evaluation  ……………………………………………………………..   53 
+Figure 7 - System Architecture Diagram ………………………………...………………... 33  
+Figure 8 - Activity Diagram……. …………………………………………………………. 34  
+Figure 9 - Sequence Diagram …………………………………………………………… ....44 
+Figure 10 - Class Diagram ………………………………………………………………... . 44 
+Figure 11 - UI Design…………………………………….…………………………………51  
+Figure12 - Technology Stack ……………………………………………………………… .53 
+Figure 13 - User Interface Implementation……………………………………………… ….65 
+Figure  14 - Actual vs XgBoost Prediction …………………………………… …………… 95 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 01: INTRODUCTION
+        
+20222296                                                            7 LIST OF TABLES  
+ 
+Table 1 - Existing Works  …………………………………………………………………..  10 
+Table 2 - Research Objectives …………………..…………………………………………..  16 
+Table 3 - Hardware Requirements  …………………………………………………  ……..  18 
+Table 4 - Software Requirements  …………………………………………………  …….  18 
+Table 5 - Performance Metrics ……………………………………………………………  22 
+Table 6 - Research Methodology ………………………………………………………….  27 
+Table 7 - Deliverables ……………………………………………………………………..  30 
+Table 8 - Risk & Mitigations …………………………………………………………..…..  31 
+Table 9 - Stakeholders Viewpoint …………………………………………………………  37 
+Table 10 - Literature Review Findings …………………………………………………….  38 
+Table 11 - Survey Findings …………………………………………………………………  42 
+Table 12 - Use Case Descriptions …………………………………………………..………  47 
+Table 13 - Functional Requir ements ………………… ……………………………………  49 
+Table 14 - Non Functional Requir ements ………… ………………………………………  50 
+Table 15 - SLEP Summary Table………………………………………………………..….51  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 01: INTRODUCTION
+        
+20222296                                                            8 LIST OF ABBREVIATIONS  
+ 
+Abbreviation  Definition  
+ML Machine Learning  
+DL Deep Learning  
+LSTM  Long Short -Term Memory  
+XGBoost  Extreme Gradient Boosting  
+SME  Small and Medium Enterprises  
+SRS System Requirement Specification  
+MAE  Mean Absolute Error  
+RMSE  Root Mean Square Error  
+MAPE  Mean Absolute Percentage Error  
+SHAP  SHapley Additive Explanations  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 01: INTRODUCTION
+        
+20222296                                                            9 CHAPTER 01: INTRODUCTION  
+ 
+1.1 Chapter Overview  
+This chapter provides an introduction to the research project, focusing on the development of 
+a machine learning –based sales forecasting system for a small -scale retail spice business. The 
+chapter begins by outlining the real -world challenges faced by smal l retailers, particularly in 
+demand prediction and inventory decision -making. It then defines the research problem and 
+highlights the limitations of traditional forecasting approaches.The chapter further presents 
+the motivation for adopting advanced machin e learning techniques, specifically the use of the 
+XGBoost regression model to generate accurate six -month sales forecasts. In addition to 
+prediction, the system incorporates scenario -based analysis, allowing users to adjust business 
+parameters such as cos t assumptions to support decision -making. To enhance transparency, 
+SHAP -based interpretability is integrated to explain model predictions.Finally, the chapter 
+defines the research aim, objectives, scope, and key contributions of the study, establishing a 
+clear foundation for the subsequent chapters.  
+ 
+1.2 Problem Background  
+ 
+1.2.1 Challenges Faced by Small Retail Businesses  
+Small retail businesses, particularly those operating in sectors such as specialty food 
+ingredients and spices, face a dynamic and unpredictable environment. One of the primary 
+challenges is aligning critical operational functions such as inventory managem ent, financial 
+planning, and resource allocation with ever -changing consumer demand.  
+• Inaccurate demand forecasting often leads to two costly outcomes: Overstocking, 
+which ties up capital in slow -moving or perishable goods and increases holding costs.  
+• Understocking, which results in missed sales opportunities, reduced customer 
+satisfaction, and potential long -term brand damage.  
+For a specialty spice shop, these challenges are intensified by a variety of influencing factors 
+including seasonal demand, cultural festivals, holiday cooking trends, and promotional 
+activities. Traditional forecasting methods that rely on simple averages  or basic regression 
+fail to capture these complex, non -linear market dynamics. Consequently, small business 
+owners are often forced to make reactive decisions rather than proactive, data -driven 
+strategies.  
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 01: INTRODUCTION
+        
+20222296                                                            10 1.2.2 Limitations of Traditional Forecasting Techniques  
+Historically, sales forecasting in small and medium -sized enterprises (SMEs) has relied 
+heavily on basic statistical models such as Linear Regression or Moving Averages. While 
+these techniques provide a general understanding of trends, they often underperf orm in real -
+world retail contexts where sales data is non -linear, high -dimensional, and influenced by 
+multiple factors.  
+Studies have shown that such models frequently yield low explanatory power, indicating their 
+limited ability to accurately represent com plex patterns in retail data (Ganguly & Mukherjee, 
+2024). As a result, businesses relying solely on traditional methods suffer from inefficient 
+inventory control, budget mismanagement, and financial uncertainty.  
+The rapid evolution of digital commerce, coupled with an abundance of transactional and 
+financial data, highlights the urgent need for advanced analytical methods capable of 
+handling these intricate relationships.  
+ 
+1.2.3 The Need for Machine Learning -Based Forecasting  
+The advancement of machine learning (ML) has significantly improved the capability of 
+forecasting systems to handle complex and non -linear data patterns. Unlike traditional 
+statistical approaches, ML models such as Random Forest, XGBoost, and Long Short -Term 
+Memory (LSTM) are capable of capturing hidden relationships within time series data, 
+making them more suitable for retail sales prediction.  
+For a small -scale spice retail business, the application of ML enables more accurate multi -
+step-ahead forecasting, particularly for predicting sales over a six -month horizon. These 
+predictions provide valuable support for key business decisions, including inventory planning 
+and demand management.  
+In this project, the forecasting output is further extended through a scenario -based approach, 
+where users can adjust business parameters such as estimated cost or demand variations. This 
+allows the system to provide flexible, what -if analysis rather than fixed financial predictions.  
+By integrating machine learning –based forecasting with user -driven inputs and interpretable 
+outputs, small business owners can shift from reactive decision -making to more informed and 
+data-driven strategies.  
+ 
+ 
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 01: INTRODUCTION
+        
+20222296                                                            11 1.3 Problem Definition  
+The core problem addressed in this research is the lack of a reliable and data -driven 
+forecasting solution for small -scale retail businesses, particularly in niche domains such as 
+spice retailing. Many small retailers rely on manual estimation or basic sta tistical methods, 
+which fail to capture seasonal and non -linear sales patterns. As a result, decisions related to 
+inventory and demand planning are often made without an accurate forward -looking 
+perspective.Therefore, the problem lies in the need for an ac curate, simple, and interpretable 
+system that can generate multi -step sales forecasts and support better decision -making for 
+small business users.  
+1.3.1 Problem Statement  
+The challenge of this research is to design and develop a machine learning –based system 
+capable of generating accurate six -month sales forecasts for a small -scale spice retail business 
+using historical sales data. The system should not only improve predict ion accuracy through 
+models such as XGBoost but also provide interpretable and practical outputs that support 
+inventory planning and scenario -based business decision -making.  
+ 
+1.4 Research Motivation  
+The motivation behind this research arises from the practical challenges faced by small -scale 
+retail businesses in accurately predicting future sales and managing inventory effectively. In 
+niche domains such as spice retailing, demand is highly influenced by seasonal patterns, 
+cultural events, and changing customer behavior, making traditional forecasting methods 
+unreliable. This often leads to inefficient stock management and missed business 
+opportunities.From a technical perspective, the project is motiva ted by the need to apply 
+advanced machine learning techniques, particularly XGBoost, to address the complexity of 
+multi -step time series forecasting. Predicting sales over a six -month horizon requires capturing 
+non-linear patterns and temporal dependencies  within limited historical data, which presents a 
+significant challenge.In addition, there is a need to move beyond pure prediction and provide 
+outputs that are understandable and usable by non -technical users. Therefore, this project is 
+further motivated by the goal of combining accurate forecasting with interpretable insights and 
+simple scenario -based analysis, enabling small business owners to make more informed and 
+practical decisions.  
+ 
+1.5 Existing Work  
+Research in retail sales prediction is extensive, with recent literature shifting heavily towards 
+Machine Learning (ML) and Deep Learning (DL) models. The table below summarizes five 
+highly relevant pieces of existing work, focusing on their contributions to model efficacy, 
+handling complex data, and application in forecasting and inventory planning.  
+ 
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 01: INTRODUCTION
+        
+20222296                                                            12 Citation  Summary  Limitation  Contribution  
+(Yadav & 
+Barde 2025)  Proposes an integrated 
+system using LSTM for 
+time-series forecasting 
+and XGBoost for 
+predictive analytics, 
+featuring real -time data 
+ingestion from POS 
+systems.  The proposed architecture is 
+highly complex, relying on 
+technologies like Apache 
+Kafka and Hadoop, which 
+may be resource -intensive 
+and impractical for a small 
+business.  Demonstrates a powerful 
+hybrid model approach that 
+combines the strengths of 
+different algorithms and 
+integrates real -time 
+capabilities.  
+(Ganguly & 
+Mukherjee 
+2024)  Found that an optimized 
+Random Forest model 
+significantly outperformed 
+other methods in handling 
+high seasonality and a 
+large number of product 
+families in a retail setting.  The study focuses primarily 
+on the accuracy of the 
+forecast itself and does not 
+detail the integration of 
+these predictions into 
+subsequent operational 
+planning.  Provides strong evidence 
+for the effectiveness of 
+tree-based ensemble 
+models, specifically 
+Random Forest, for 
+complex retail datasets 
+with strong seasonal 
+patterns.  
+(Wen et al. 
+2024)  Applied an XGBoost 
+model for sales prediction 
+in a Big Mart context, 
+demonstrating superior 
+performance compared to 
+other models.  The research is centered  on 
+a large retail chain, and its 
+findings may not be directly 
+transferable to a small, 
+single -store business with 
+different data 
+characteristics.  Reinforces the standing of 
+XGBoost as a state -of-the-
+art model for large -scale 
+retail sales forecasting.  
+(Ecevit et al. 
+2023)  Conducted a comparative 
+analysis of LSTM, 
+Prophet, and SARIMA 
+models for short -term 
+(hourly) sales forecasting 
+for a grocery e -commerce 
+retailer.  The focus on hourly, e -
+commerce data may not 
+reflect the patterns of long -
+term (6 -month), in -store 
+sales for a specialty shop.  Showed that LSTM models 
+can outperform both 
+traditional statistical 
+models (SARIMA) and 
+modern automated models 
+(Prophet) for short -term 
+grocery sales.  
+(Paliari et al. 
+2021)   Compared optimized 
+LSTM, XGBoost, and 
+ARIMA models for 
+financial time series (stock 
+index) forecasting.  The domain is financial 
+markets, not retail sales. 
+The study also noted that 
+ARIMA performed better 
+on datasets with a limited 
+range of values, a potential 
+consideration for small 
+datasets.  Provides a valuable cross -
+domain comparison, 
+showing that while ML/DL 
+models are generally 
+superior, traditional 
+statistical methods can still 
+be competitive under 
+specific data conditions.  
+Table 1 - Existing works  
+ 
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 01: INTRODUCTION
+        
+20222296                                                            13 1.6 Research Gap  
+Despite significant advancements in machine learning –based sales forecasting, several key 
+research gaps persist that justify the need for this project.  
+First, most existing studies rely on generalized datasets from large retail chains such as 
+Walmart or BigMart, overlooking the specific challenges of specialized retail sectors. There 
+remains limited exploration of niche markets like food ingredients or sp ices, where sales 
+patterns, product perishability, and seasonal demand introduce unique forecasting 
+complexities (Davinder Pal Singh, 2023).  
+Secondly, prior research has largely focused on improving predictive accuracy while 
+neglecting the operational and managerial usability of model outputs. Many studies conclude 
+at the evaluation stage (using metrics such as RMSE or MAE), without addressing how such 
+models can be integrated into day -to-day business processes like inventory planning and 
+decision support (Padmanabhan Venkiteela, 2025).  
+In addition, existing approaches rarely incorporate user -adjustable business parameters, 
+limiting the flexibility of models in real -world scenarios. Small business owners often require 
+the ability to explore different “what -if” conditions, such as changes in demand or cost 
+assumptions, which is not sufficiently addressed in current research.  
+Finally, high -performing algorithms such as XGBoost often suffer from limited 
+interpretability, creating a “black -box” perception that reduces managerial trust and hinders 
+strategic decision -making. A clear need exists for approaches that not only achieve high 
+accuracy but also enhance transparency and explainability in model outcomes (Davinder Pal 
+Singh, 2023).  
+To address these gaps, this project proposes the development of an interpretable and 
+application -oriented XGBoost -based forecasting system tailored to the spice retail domain. 
+The system integrates SHAP (SHapley Additive Explanations) to visualize feature 
+contributions and incorporates scenario -based analysis to improve practical usability, thereby 
+contributing to both the practical and academic dimensions of predictive analytics.  
+ 
+1.7 Contribution to Body of Knowledge  
+This research will contribute to the body of knowledge in two key areas: the problem domain 
+of small business management and the research domain of applied machine learning.  
+1.7.1 Problem Domain Contribution  
+This project will deliver a comprehensive and actionable system that empowers small 
+specialty retailers, specifically within the spice retail domain, to leverage their own financial 
+data for advanced forecasting and operational optimization. The system int roduces a 6-month 
+multi -step-ahead sales forecasting approach , tailored to capture seasonal and domain -specific 
+sales patterns in niche retail environments.  
+The outcome is a clear methodology that not only improves inventory management, enhances 
+financial stability, and increases profitability, but also incorporates a scenario -based decision 
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 01: INTRODUCTION
+        
+20222296                                                            14 support system , allowing business users to explore “what -if” conditions and make informed, 
+data-driven decisions. This provides a practical competitive advantage in a challenging 
+market.  
+ 
+1.7.2 Research Domain Cont ributio n 
+This research contributes a detailed comparative analysis of modern machine learning models 
+on a small -business dataset, identifying key features and modeling techniques suitable for 
+long-horizon forecasting in niche retail domains. More significantly, it proposes and validates 
+a practical methodology for 6-month multi -step-ahead forecasting using XGBoost , addressing 
+the challenges of limited and seasonal data.  
+In addition, the study integrates SHAP (SHapley Additive Explanations)  to enhance model 
+interpretability, reducing the “black -box” nature of machine learning models and improving 
+trust for business users. Furthermore, it introduces a structured approach for integrating 
+forecast outputs into financial and inventory management  formulas, along with a scenario -
+based decision framework , thereby bridging the gap between predictive modeling and real -
+world business application.  
+ 
+1.8 Research Challenges  
+This project will address several inherent research challenges:  
+1. Data Scarcity and Quality: Ensuring the developed models can generate effective forecasts 
+with potentially limited or sparse historical sales data (a common SME constraint) while 
+maintaining high accuracy, as model performance is heavily reliant on data  quality.  
+2. Computational Resources: The training and optimization (hyperparameter tuning) of 
+complex ML models necessitate sufficient computational power, which must be addressed, 
+potentially by leveraging cloud platforms or robust local hardware.  
+3. Model Selection and Optimization: Identifying the single best -performing model or 
+optimizing a robust hybrid strategy capable of balancing the capture of linear trends, non -
+linear patterns, and significant seasonality over the challenging 6 -month foreca sting horizon.  
+4. Integration of Forecasts: Developing a robust and validated methodology to translate a 
+statistical forecast into dynamic parameters for financial and inventory formulas requires a 
+careful synthesis of data science and business management principles.  
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 01: INTRODUCTION
+        
+20222296                                                            15 1.9 Research Questions  
+RQ1: Which machine learning (ML) or hybrid model (e.g., XGBoost, LSTM, RF, or 
+combined approaches) yields the highest accuracy when performing multi -step-ahead sales 
+forecasting (e.g., a six -month horizon) for seasonal food ingredient retail data?  
+RQ2: To what extent does the accurate 6 -month sales forecast derived from the selected ML 
+model translate into quantifiable improvements in inventory forecasting  and cash flow 
+analysis  efficiency for the retail business?  
+RQ3: What are the most effective features  for improving the accuracy of a 6 -month sales 
+prediction in this domain?  
+RQ4: How can a multi -step machine learning sales forecast be systematically integrated into 
+standard operational formulas to provide Sales Forecasting , inventory forecasting, and cash 
+flow analysis for a small business?  
+ 
+1.10 Research Aim  
+The primary aim of this research is to design, develop, and evaluate a machine learning –
+based predictive system for generating accurate six -month sales forecasts for a specialty food 
+retail business. The study focuses on the application of the XGBoost mode l to capture 
+complex sales patterns and provide reliable predictions. In addition, the system aims to 
+support inventory planning and business decision -making through interpretable outputs and 
+scenario -based analysis.  
+ 
+1.11 Research Objectives  
+Objectives  Research Objective (R0x)  Description  LOs 
+Mapped  RQ 
+Mapped  
+Problem 
+Identification  R01: To establish the 
+current limitations of 
+conventional sales 
+forecasting methods for 
+specialty food SMEs and 
+define the requirement for a 
+multi -objective predictive 
+system.  Define the gap regarding 
+accessible ML solutions for 
+Small and Medium 
+Enterprises (SMEs) and the 
+need for translating long -
+horizon sales forecasts into 
+actionable financial and 
+inventory decisions.  LO1,L
+O2  - 
+Literature Review  R02: To conduct an in -depth 
+survey comparing advanced 
+ML, DL, and hybrid 
+approaches for retail sales 
+time series forecasting.  Critically review the 
+documented performance 
+of algorithms such as 
+XGBoost, LSTM, LR and 
+other  models for handling 
+seasonality, non -linearity, LO1,L
+O2 RQ1  
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 01: INTRODUCTION
+        
+20222296                                                            16 and exogenous variables 
+inherent in retail sales data.  
+Requirement 
+Elicitation  R03: To define the system, 
+data, and functional 
+requirements for integrating 
+the sales prediction output 
+with core business modules 
+(Inventory, Cashflow).  Identify necessary 
+transactional data, product 
+financial attributes (like 
+MRP), and temporal 
+features (seasonality) 
+required for modeling and 
+determine the target 
+accuracy level for practical 
+implementation.  LO2,L
+O3 RQ2, 
+RQ3  
+System Design  R04: To design the multi -
+tiered system architecture 
+and process flow necessary 
+for data preprocessing, 
+optimal ML model 
+selection, and the derivation 
+of actionable business 
+outputs.  Develop a design detailing 
+the required data pipeline, 
+feature engineering steps, 
+model deployment, and the 
+logic flow connecting the 
+sales volume forecast to the 
+calculation of financial and 
+inventory metrics.  LO3 RQ3  
+Implementation: 
+Data  R05: To collect and 
+preprocess sales  datasets, 
+focusing specifically on 
+engineering influential 
+features to maximize the 
+model's predictive accuracy.  Prepare the unique food 
+ingredient sales data by 
+handling missing values, 
+incorporating time -based 
+features (lags), and 
+ensuring the integration of 
+available financial details . LO3,L
+O4 RQ2  
+Implementation: 
+Model  R06: To implement, tune, 
+and comparatively evaluate 
+multiple advanced ML/DL 
+models to determine the 
+optimal algorithm for 
+accurate 6 -month multi -
+step-ahead sales forecasting.  Train and optimize 
+competing models (e.g., 
+XGBoost, LSTM, LR) 
+through hyperparameter 
+tuning and cross -validation 
+to select the most robust 
+predictor for the specified 
+long forecasting horizon.  LO3,L
+O4 RQ1, 
+RQ2  
+Implementation: 
+Business Logic  R07: To develop the 
+business logic that 
+systematically translates the 
+accurate 6 -month sales 
+forecast (R06 output) into 
+specific, quantifiable 
+estimates for Inventory Implement the derived 
+logic to calculate inventory 
+requirements, revenues, 
+and subsequent cashflow 
+scenarios and the predicted 
+sales volumes of the 6 -
+month period.  LO3,L
+O4 RQ3,  
+RQ4  
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 01: INTRODUCTION
+        
+20222296                                                            17 Forecasting  and Cashflow 
+analysis . 
+Testing  R08:To enhance model 
+interpretability through 
+SHAP -based explanation 
+techniques..  Implement SHAP 
+visualizations to identify 
+key drivers influencing the 
+ML model’s sales 
+forecasts, ensuring 
+transparency and 
+actionable insights for 
+business users.  LO4 RQ4  
+Documentation  R09: To document the 
+comprehensive 
+methodology, 
+implementation details, 
+challenges faced, and a 
+synthesis of the research 
+findings.  Compile the final technical 
+report, focusing on the 
+justification for model 
+choice and the practical 
+implications of the ML -
+based framework in the 
+specialty retail domain.  LO5  - 
+Publication  R10: To prepare a research 
+paper suitable for 
+publication detailing the 
+comparative study of 
+ML/DL models for long -
+horizon retail sales 
+forecasting and the 
+framework for translating 
+predictions into business 
+outcomes.  Summarize the empirical 
+results comparing ML 
+models for multi -step-
+ahead forecasting and the 
+integrated business solution 
+for submission to an 
+appropriate academic 
+venue.  LO5  - 
+Table 2 - Research Objectives  
+ 
+1.12 Project Scope  
+1.12.1 In Scope  
+• The project will utilize the historical financial dataset from a single food ingredients 
+(spices) shop.  
+• The core deliverable is a machine learning model capable of generating a six -month 
+sales forecast.  
+• The forecast will be used as a direct input to generate actionable plans for:  
+• Sales Forecasting for 6 Months  
+• Predictive inventory forecasting  
+• cash flow analysis.  
+• The research will include a comparative analysis of several machine learning 
+algorithms to identify the most suitable model.  
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 01: INTRODUCTION
+        
+20222296                                                            18 1.12.2 Out Scope  
+• The models will not incorporate broad external macroeconomic indicators (e.g., GDP, 
+inflation rates).  
+• The analysis is limited to a single -store context and will not be generalized to a multi -
+store or franchise model.  
+• The project will not address unpredictable supply -side disruptions beyond 
+incorporating standard lead time variability into inventory calculations.  
+• The developed system will operate on historical and batch -processed data, not a real -
+time application integrated or dynamic inventory adjustments.  
+1.13 Hardware/Software Requirements  
+1.13.1 Hardware Requirements  
+Component  Specification  
+Development Environment 
+CPU  Intel (R) Core (TM) i5 8th generation or higher, such as Intel i9 
+or AMD Ryzen 9.  
+RAM (Memory)  16 GB RAM (Minimum) or 32 GB RAM (Optimal).  
+GPU/VRAM (Optional)  NVIDIA RTX series (RTX 2080 or newer) or equivalent.  
+Storage  1 TB SSD (for high -speed access) or 40 GB minimum disk 
+space.  
+Table 3 - Hardware Requirement  
+1.13.2 Software Requirements  
+Category  Software/Tools/Libraries  
+Programming Languages  Python – primary language for data preprocessing, model 
+development, and evaluation.  
+ReactJS -for simple dashboard or result visualization interface.  
+Machine Learning 
+Libraries  XGBoost  – main algorithm for regression -based sales forecasting.  
+Development 
+Environment  Visual Studio Code (VS Code)  – for structured coding, version 
+control, and integration with GitHub.  
+Database/Storage  CSV -based dataset storage and processing  
+ML Frameworks/API  XGBoost API  – for gradient boosting model training and 
+prediction  
+Documentation  Google Docs  – for preparing reports, requirement specifications, 
+and analysis documentation.  
+Table 4 - SoftwareRequirement  
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 01: INTRODUCTION
+        
+20222296                                                            19 1.14 Chapter Summary  
+This chapter has made the research project grounded. It started with the determination of the 
+dire necessity of the proper sales forecasting in retail settings and spelled out the precise issue 
+of the implementation of predictive analytics into operational  planning. This study is 
+motivated by the fact that it involves technical issues when complex sales data with little 
+historical data is to be modeled. An examination of literature on the subject showed that there 
+was a gap in small business based holistic frameworks, which go beyond prediction and to a 
+practical application. This project is, therefore, focused on developing, evaluating, and 
+designing such a framework based on particular research questions and objectives. The 
+chapter finished with the defini tion of the exact scope of the project and the list of the 
+technical resources that should be used to complete the project successfully.  
+ 
+ML-Based Sales Forecasting for Retail Spices    CHAPTER 02: LITERATURE OVERVIEW  
+20222296                                                        14 Chapter 2: Literature Review  
+ 
+2.1 Chapter Overview  
+This chapter is the systematic review of the available body of knowledge about sales 
+forecasting, machine learning (ML) methods, and their importance in defining the inventory 
+optimization and financial planning in the retail industry.  This review aims at providing the 
+theoretical basis of the intended project, follow the historical development of the forecasting 
+techniques, and critically assess the capabilities and limitations of the models available.  
+Combining these results, the chapter will support the choice of ML methods used when 
+working with complex retail data and reveal the key gaps in research that the combination of 
+6-month sales predictions with this particular output such as financial planning, resources 
+allocation, inventory forecasting, and c ashflow analysis are expected to fill.  
+ 
+2.2 Problem Domain  
+Accurate sales forecasting is a cornerstone of retail operations. In the modern digital age, the 
+conventional approach to business analysis has been transformed by advancements in 
+machine learning and predictive analytics (Ahaggach, Abrouk and Lebon, 2024) . ML 
+techniques allow organizations to analyze historical data  to identify patterns and trends, 
+generating accurate prognoses relating to future activities. This is particularly critical in 
+competitive markets where profit margins are pressured (Ganguly & Mukherjee, 2024).  
+2.2.1 The Challenge of Retail Sales as a Time Series Problem  
+Sales forecasting is fundamentally approached as a time series problem. Time series 
+forecasting consists of predicting several future observations of a given sequence of historical 
+data. In retail environments, sales data are often noisy and non -stationary , exhibiting complex 
+trends, seasonal cycles, and volatilities that change over time (Ahaggach, Abrouk and Lebon, 
+2024).  
+Historically, forecasting relied on statistical methods, but these often fall short when dealing 
+with the non -linear relationships and complexity inherent in sales dynamics. For instance, 
+Linear Regression (LR) models often exhibit suboptimal performance, with some studies 
+finding $R^2$ values around $0.5$, indicating that only about half of the variability in sales 
+was explained by the linear model. This inadequacy underscores the necessity for more 
+robust, non -linear models capable of handling intricate s ales dynamics (Ganguly & 
+Mukherjee, 2024; Fredén & Larsson, 2020)  
+Furthermore, the specific objective of predicting sales six months ahead constitutes a multi -
+step-ahead forecasting problem. This challenge requires careful selection of algorithms and 
+strategies (such as recursive or direct forecasting methods) to manage complexity and 
+maintain accuracy over a long forecast horizon (Souhaib Ben Taie,2014).  
+ML-Based Sales Forecasting for Retail Spices    CHAPTER 02: LITERATURE OVERVIEW  
+20222296                                                        15 2.2.2 Progression from Statistical Models to Machine Learning  
+The forecasting field has experienced an "explosive increase" in the adoption of machine 
+learning and deep learning techniques since 2013, moving beyond traditional statistical 
+models like ARIMA (Ahaggach, Abrouk and Lebon, 2024). Machine learning algorithms 
+automatically derive rules and decision models from data, allowing them to capture complex 
+patterns using available temporal and historical features, while also supporting the inclusion 
+of external variables where available .(Martins & Galegale, 2023),(F redén & Larsson, 2020).  
+Prominent ML and Deep Learning (DL) models repeatedly demonstrated effectiveness in 
+sales prediction across various retail datasets (e.g., BigMart Sales dataset or Walmart sales 
+data from Kaggle):(Davinder Pal Singh , 2023)  
+• Ensemble and Tree -based Models: Models like XGBoost, Random Forest (RF), and 
+Gradient Boosting (GB) are highly favoured. XGBoost, described as a scalable tree boosting 
+system, has proven to be a successful model for forecasting. Studies have shown tuned RF 
+models achieving high performance metrics, such as an $R^2$ value of $0.945$ for sales 
+forecasting. XGBoost has also achieved high accuracy, for example, 84.7% in comparative 
+supermarket sales studies.(Davinder Pal Singh , 2023)  
+• Deep Learning (DL) Models: Long Short -Term Memory (LSTM) neural networks are 
+essential for time series forecasting, especially due to their ability to capture long -term 
+dependencies and sequential patterns. LSTM and XGBoost showed the most promise overal l 
+in one comparative study.(Fredén & Larsson, 2020)  
+• Hybrid Models: The synthesis of traditional models with ML algorithms is an emerging 
+trend aimed at enhanced predictive performance and robustness. For example, studies have 
+utilized ensembles that integrate models like LightGBM, XGBoost, and Deep Neural  
+Networks (DNN) to capture both short -term fluctuations and long -term trends.(Tian jin 
+,2025 ). 
+ 
+2.2.3 Justification for Business -Oriented Outputs  
+The ultimate value of accurate sales prediction lies in its practical application to managerial 
+decision -making (Padmanabhan Venkiteela, 2025). The proposed outputs of this research —
+sales prediction, inventory forecasting, and decision -support insights —are directly supported 
+as crucial applications in the literature:  
+1. Inventory Forecasting:  Improved sales forecasts enable businesses to minimize 
+waste caused by overstocking and maximize sales by preventing understocking 
+(Fredén & Larsson, 2020). For industries dealing with perishable goods such as food 
+ingredients, accurate forecasting is ess ential to reduce revenue loss. It is particularly 
+important for Small and Medium Enterprises (SMEs) to maintain profitability and 
+achieve long -term growth by reducing risks associated with inventory 
+mismanagement (Y.K. Anuda Harishchandra, 2025).  
+ 
+ML-Based Sales Forecasting for Retail Spices    CHAPTER 02: LITERATURE OVERVIEW  
+20222296                                                        16 2. Business Planning and Resource Allocation:  Sales forecasts act as key inputs for 
+supporting business planning and operational decisions, including resource allocation 
+and demand management. Forecasting models assist managers in making informed 
+strategic decisions by providing future -oriented insig hts rather than relying on 
+intuition (Ahaggach, Abrouk and Lebon, 2024). In this context, the system supports 
+simple scenario -based analysis, allowing users to explore different business 
+conditions and improve decision -making.  
+ 
+2.2.4 Research Gaps Addressed by the Proposed Project  
+Despite the proliferation of high -accuracy ML models, the existing research presents specific 
+gaps that this project aims to address:  
+1. Gap in Specialised Retail Contexts:  A large proportion of academic research relies 
+on generalised datasets (e.g., BigMart, Walmart sales data). There is a recognized need 
+for more diverse datasets across various market segments to validate the 
+generalizability of predictive models. By focus ing on food ingredients (spices), the 
+project addresses the unique sales dynamics and short shelf -life complexities of a 
+specialized retail niche (Davinder Pal Singh, 2023).  
+2. Gap in Operationalization and Usability:  Many research efforts focus solely on 
+predictive accuracy metrics (e.g., RMSE, MAE) but do not effectively bridge the gap 
+between technical output and practical business application (Padmanabhan Venkiteela, 
+2025). Research often stops at model evaluation,  without addressing the challenges in 
+deployment, integration, and usability for non -technical business stakeholders. This 
+project addresses this gap by providing actionable outputs such as sales forecasting, 
+invento ry planning support, and scenario -based decision analysis, thereby improving 
+real-world usability (Padmanabhan Venkiteela, 2025).  
+3. Gap in Model Interpretability for Decision Making:  High -performing ML models 
+like XGBoost are frequently categorized as non -transparent black -box models 
+(Bohanec, Kljajič Borštnar, & Robnik -Šikonja, 2016). Limited research exists on the 
+interpretability of these models, which is necessary for business env ironments where 
+managers require transparency and comprehensibility to trust the forecast and justify 
+strategic decisions (Davinder Pal Singh, 2023). Recent advancements in explainable 
+artificial intelligen ce have introduced techniques such as SHAP (SHapley Additive 
+Explanations), which provide feature -level interpretability for complex models like 
+XGBoost.  
+ 
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices    CHAPTER 02: LITERATURE OVERVIEW  
+20222296                                                        17 2.3 Existing Work  
+The progression of research in sales forecasting has transitioned from relying on simpler 
+statistical models to embracing complex, powerful machine learning (ML) and deep learning 
+(DL) algorithms. This shift has been driven by the need to handle the increa sing volume and 
+complexity of transactional retail data.(Davinder Pal Singh , 2023 )  
+1. Singh (2023)  
+This study, focusing on the BigMart Sales dataset, aimed to predict sales patterns and 
+consumer behaviour using machine learning techniques in the business sector. The primary 
+methodology involved a comparative classification study, applying and evaluating  models 
+such as XGBoost, K -Nearest Neighbours (KNN), Generalized Linear Model (GLM), and 
+Decision Tree. A comprehensive pipeline was followed, including data preprocessing steps 
+like feature creation, feature reduction via PCA (Principal Component Analysis ), and 
+handling missing values. The core contribution was demonstrating the predictive capacity of 
+KNN, with an "upgraded KNN customer categorisation model" achieving an impressive 
+accuracy greater than 0.925. However, the study’s limitation lies in its pr imary focus on 
+classification  (predicting product categories or behaviour) rather than the regression  task of 
+predicting precise sales values, which is essential for accurate inventory ordering and 
+financial reporting in your food ingredients shop.  
+2. Ganguly & Mukherjee (2024)  
+This research addressed the imperative of improving retail sales prediction accuracy by 
+rigorously optimizing various ML models to navigate complex challenges like seasonality 
+and numerous product families. The authors utilized a dataset provided by Favori ta Stores, a 
+retail chain in Ecuador. Their methodology centered on ensemble methods and meticulous 
+optimization techniques, comparing models such as Linear Regression (LR), Random Forest 
+(RF), Gradient Boosting (GB), and XGBoost. The core contribution was  the achievement of 
+significantly improved results, where an optimized Random Forest (RF) model was able to 
+explain 94.5% of the variance in sales ($R^2$ of 0.945). The critique highlights the 
+inadequacy of simpler approaches, noting that initial LR applic ation showed overall 
+suboptimal performance, with adjusted $R^2$ values frequently stabilizing around 0.5. This 
+necessitates the use of complex, computationally intensive methods like optimized RF to 
+achieve real -world viability.  
+3. Ben Taieb (2014)  
+The primary objective of this doctoral work was to contribute to the development of robust 
+multi -step-ahead forecasting strategies based on machine learning algorithms. This is directly 
+relevant to your 6 -month prediction objective. The study systematicall y compared traditional 
+forecasting approaches, specifically analysing the difference between recursive (iterating a 
+one-step-ahead model) and direct (a separate model for each horizon) strategies. The key 
+contribution involved the introduction of multi -stage forecasting strategies —such as rectify 
+and boost strategies —designed to address the difficult task of choosing between recursive 
+and direct forecasts by combining the best properties of both. The analysis relied on 
+decomposing the Mean Squared Forecast Errors (MSE) into its bias and variance 
+components, a rigorous methodology for evaluating error sources over longer horizons. A 
+persistent limitation noted in the broader literature is the limited attention given to multi -step 
+ML-Based Sales Forecasting for Retail Spices    CHAPTER 02: LITERATURE OVERVIEW  
+20222296                                                        18 forecasts generated specifically with machine learning models, outside of early work on 
+Neural Networks, due to analytical and computational complexity.  
+4. Ahaggach, Abrouk, and Lebon (2024)  
+This systematic mapping study (SMS) provided a comprehensive overview of the sales 
+forecasting landscape between 2013 and 2024, meticulously reviewing over 1,000 papers. 
+The research objective was to construct a defined taxonomy of technologies used, scrut inize 
+publication venues, and decode the key factors driving sales forecasting. The core 
+contribution lies in its synthesis of trends, confirming that ML algorithms, statistical methods, 
+and time series analysis are central to modern sales forecasting. The  study highlights a 
+remarkable, sustained growth in research efforts, particularly since 2016. In terms of practical 
+data, the review established that time series data are the most frequently used in sales 
+forecasting studies, a natural consequence of sale s being inherently time -dependent. The 
+primary limitation of a mapping study is that it provides a descriptive analysis of existing 
+work and does not implement a novel predictive algorithm itself or offer comparative 
+performance metrics of new models.  
+5. Harishchandra (2025)  
+This research focused on implementing an Inventory Management System with sales 
+prediction specifically for Small and Medium Enterprises (SMEs). The motivation stemmed 
+from the critical observation that SMEs often rely on rudimentary computational or manua l 
+methods, and existing sophisticated forecasting models are often too complex and expensive 
+for them. The methodology proposed the use of XGBoost and features such as Cyclic 
+Encoding to capture seasonal variations. The main contribution is the development  of a low -
+cost, easy -to-use predictive inventory system tailored for SMEs, which focuses on stock 
+balancing to avoid overstocking and understocking. Critically, this research implies that the 
+selection criterion for the model prioritizes feasibility, affor dability, and practical utility for 
+small businesses over potentially achieving marginal gains in accuracy from highly complex, 
+resource -intensive models designed for large enterprises.  
+6. Mustapha and Sithole (2025)  
+The objective of this research was to examine common machine learning and time series 
+analysis techniques for sales forecasting, ultimately seeking the best -fitted technique for 
+enhancing future profit margins. The methodology involved retrieving five year s of publicly 
+available store -item sales data (from Kaggle.com) and training and comparing multiple 
+models, including ARIMA, the deep learning technique LSTM (Long Short -Term Memory) 
+(a recurrent neural network), and XGBoost. The contribution is a comparis on of outcomes 
+from these models to establish which is most suitable for time -series forecasting in a retail 
+context. The comparative models employed, such as ARIMA, require that the model be fitted 
+numerous times for each identifier's distinctive value du e to the algorithm's adaptability. This 
+highlights a limitation related to computational efficiency and scalability when dealing with a 
+high number of distinct products.  
+ 
+ML-Based Sales Forecasting for Retail Spices    CHAPTER 02: LITERATURE OVERVIEW  
+20222296                                                        19 2.4 Dataset Selection  
+The supporting dataset for this project should be comprehensive, primarily focusing on 
+transactional sales data supplemented by financial metrics, product details, and external 
+factors. The complexity of forecasting in the retail sector, particularly for s pecific categories 
+like food ingredients (spices), requires high -quality data to train predictive models 
+effectively.  
+A suitable dataset structure, informed by similar supermarket and retail sales forecasting 
+studies, must integrate the following components:  
+A. Core Transactional Data (Historical Sales)  
+The fundamental dataset will comprise the historical sales records, which serve as the 
+primary time series input. This data corresponds directly to the shop's collected financial 
+details of items and is essential for all four projected outcomes (sales pred iction, inventory  
+and cashflow).  
+Example variables include:  
+Total Monthly Sales Value  
+Date (Month/Year)  
+B. Internal and Engineered Features  
+To improve model performance, additional features were engineered from the historical sales 
+data to capture temporal patterns and dependencies. These features are essential for handling 
+seasonality and non -linearity within the dataset (Ganguly & Mukherjee,  2024).  
+To improve model performance, additional features were engineered from the historical sales 
+data to capture temporal patterns and dependencies. These features are essential for handling 
+seasonality and non -linearity within the dataset (Ganguly & Mukherjee,  2024).  
+Example features include:  
+● Lagged Sales Data (Lag1, Lag2, Lag3)  
+● Rolling Statistics (Rolling Mean, Rolling Standard Deviation)  
+● Time -Based Features (Month Number, Month of Year)  
+ 
+C. Exogenous Data (External Factors)  
+Due to data availability constraints, external variables such as weather conditions, 
+promotions, or economic indicators were not included in this study. However, time -related 
+features such as month and seasonality were used to indirectly capture external i nfluences on 
+sales patterns (Martins & Galegale, 2023).  
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices    CHAPTER 02: LITERATURE OVERVIEW  
+20222296                                                        20 2.5 Benchmarking and Evaluation  
+Evaluating the effectiveness of a sales forecasting model requires comparing its performance 
+against established benchmarks and assessing its reliability using multiple statistical metrics. 
+Selecting the right evaluation metrics is paramount, as different metrics highlight different 
+flaws or benefits in a model.(Fredén & Larsson, 2020)  
+ 
+2.5.1 Performance Metrics  
+For time series regression tasks like sales forecasting, standard metrics are categorized based 
+on whether they prioritize absolute error magnitude or relative percentage error:  
+Metric Category  Metric  Purpose and Significance  
+Magnitude Errors 
+(Absolute Units)  Mean Absolute 
+Error (MAE)  Represents the average magnitude of error in the 
+units of the sales quantity. It is highly useful in a 
+retail context because it corresponds directly to the 
+actual wasted goods or lost sale 
+opportunities.(Fredén & Larsson, 2020)  
+ Root Mean 
+Squared Error 
+(RMSE)  Calculates the square root of the average squared 
+error. RMSE is valuable because it enlarges the 
+effect of larger absolute errors, which are often 
+considered detrimental due to their significant 
+economic effect for a retailer.,(Sithole & Mustapha 
+,2025)  
+Relative/Percentage 
+Errors  Mean Absolute 
+Percentage Error 
+(MAPE)  Expresses forecast errors as a percentage, which is 
+particularly useful for comparative analysis across 
+products or categories with different sales volumes. 
+XGBoost studies frequently report MAPE 
+reductions as evidence of superior 
+performance.(Ahaggach, Ab rouk and Lebon, 2024)  
+Model Fit/Variance  $R$-squared 
+($R^2$)  Represents the proportion of the variance in the 
+target variable (sales) that is explained by the 
+model. High $R^2$ values (e.g., 0.945 achieved by 
+an optimized Random Forest) indicate a strong 
+model fit.(Sithole & Mustapha ,2025)  
+Table 5 - Performance Metrics  
+ 
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices    CHAPTER 02: LITERATURE OVERVIEW  
+20222296                                                        21 2.5.2 Benchmarking Existing Solutions  
+Comparison across existing literature confirms that ensemble methods and deep learning 
+techniques generally outperform traditional statistical and linear approaches in handling 
+complex retail sales data:  
+• XGBoost and Ensemble Methods: XGBoost is recurrently identified as a highly 
+effective model for sales forecasting due to its robustness and ability to handle non -
+linear data. In comparative studies using retail data, XGBoost outperformed models 
+like Decisi on Tree, Random Forest, Gradient Boosting, and AdaBoost, achieving an 
+$R^2$ of 0.852. In specialized domains like pharmaceutical sales, XGBoost 
+demonstrated significant error reduction, lowering the Mean Absolute Percentage 
+Error (MAPE) from $27.48%$ to $1 7.89%$ for certain product categories compared 
+to Seasonal Naïve models,(Padmanabhan Venkiteela,2025)  
+• Deep Learning (LSTM): Long Short -Term Memory (LSTM) models are widely 
+applied to time series problems for their capability to capture temporal dependencies. 
+LSTM often shows high performance in terms of accuracy and $R^2$ values 
+compared to linear models. However, its performance remains context -dependent; in 
+some datasets (e.g., stable prescription trends), simpler models like SARIMA proved 
+superior.  (Vili Ripatti ,2024) ,(Dr. K K Ramachandran ,2023)  
+• Linear and Basic Models: Traditional methods like Linear Regression (LR) and 
+simple Decision Trees often exhibit suboptimal performance, struggling to capture the 
+complex, non -linear dynamics of retail sales, sometimes yielding low $R^2$ values 
+around $0.5 $. 
+• Random Forest:  Random Forest is another widely used ensemble learning method 
+that performs well in retail sales forecasting due to its ability to reduce overfitting and 
+handle non -linear relationships. Studies have shown that optimized Random Forest 
+models can achieve h igh predictive performance, especially in datasets with strong 
+seasonality and multiple influencing factors. However, compared to boosting methods 
+like XGBoost, Random Forest may be less effective in capturing complex residual 
+patterns.  
+In addition to traditional performance metrics, this research also emphasizes the importance 
+of model interpretability in evaluating forecasting effectiveness. To ensure transparency and 
+managerial trust, the project integrates SHAP (SHapley Additive Expla nations) as part of the 
+evaluation process.  
+ 
+ 
+ 
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices    CHAPTER 02: LITERATURE OVERVIEW  
+20222296                                                        22 2.6 Chapter Summary  
+This review has affirmed that the complex retail sales forecasting should preferably be 
+performed on the basis of the most advanced machine learning models, e.g. XGBoost, rather 
+than the conventional methods. The project continues this and puts emphasis on  the 
+specialized food ingredients -spices -marketplace and the unique dynamics in the same e.g. 
+short shelf -life. A major goal of this study is to fill the gap between technical prediction 
+accuracy and business intelligence that can be taken to action. The s ales forecast will be 
+eventually converted into the outputs required in the financial planning, inventory 
+management and cash -flow analysis. Further work will also be focused on the interpretation 
+of these elaborate models, which will increase trust and ev entually its implementation by 
+users in the business fraternity.  
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 03: METHODOLOGY  
+20222296                                                        23 Chapter 03: Methodology  
+ 
+3.1 Chapter Overview  
+This chapter would provide the methodological framework of this research project. This 
+chapter begins by defining the research methodology based on the Research Onion by 
+Saunders and the reason why the philosophical, strategic, and tactical alternatives ha ve been 
+chosen. It then follows it up with discussions in finer details of the development methodology 
+followed - requirement elicitation method, system design, programming, and testing. This 
+chapter also defines the target solution methodology and gives an  overview of the machine 
+learning pipeline stepwise starting with the data collection and ending with model evaluation. 
+The section also provides the project management methodology that has been used in driving 
+the project implementation including scope, t imeline, resource planning and 
+monitoring/mitigation plans of the risks involved in the project.  
+ 
+3.2 Research Methodology  
+The research methodology chosen for this project follows the multi -layered structure 
+proposed by Saunders, leveraging a combination of quantitative ML analysis and qualitative 
+application assessment, which is specifically suited for an implementation proje ct within a 
+specialized business context.  
+Layer of Research 
+Onion  Description in 
+Context of Sales 
+Forecasting Project  Justification and Citation  
+Research 
+Philosophy  Pragmatism  The rationale behind the adoption of this 
+philosophy is that the study incorporates both a 
+quantitative analysis (ML model accuracy) and a 
+qualitative analysis (feedback on the usefulness 
+of generated financial and inventory outputs 
+provided by the stakeho lders).  Pragmatism has 
+the benefit of using various approaches best 
+suited to address the business issue at hand on a 
+real-world, which is optimizing inventory 
+(Small -Medium 
+Enterprise(SME). (Y.K.AnudaHarishchandra, 
+2025)  
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 03: METHODOLOGY  
+20222296                                                        24 Research 
+Approach  Deductive 
+Approach  This research aims to assess and confirm the 
+efficiency of some of the well -known 
+forecasting models, such as XGBoost or LSTM, 
+on a special proprietary dataset.  We do not want 
+to develop new theoretical frameworks, but 
+rather determine whether these current machine 
+learning models can help us make the right 
+predictions of sales, to the level of high 
+accuracy we expect.  (Niluja , 2023)  
+Methodological 
+Choice  Mixed Method 
+(Quantitative and 
+Qualitative)  This paper aims at testing and verifying the 
+applicability of certain popular forecasting 
+models, such as XGBoost and LSTM, on a 
+particular proprietary dataset.  There is no effort 
+to construct new theoretical concepts; the 
+question is whether these already existing 
+machine learning models are capable of rising to 
+the challenge of making highly accurate sales 
+predictions or not.  In essence, we would like to 
+know whether these models that have been 
+established will bring the results we are 
+expecting. .(Niluja , 2023)  
+Research Strategy  Experimentation 
+and Case Study  We will measure our project with two major 
+approaches.  To measure the performance of our 
+machine learning models, first, quantitative 
+techniques will be used, such as 
+experimentation, to evaluate the performance 
+using such measures as MAE and RMSE.  
+Second, we will obtain qualitative feedback by 
+interviewing to determine the usability and 
+feasibility of our outputs inventory forecasting 
+and cash flow to non technical parties.  This 
+makes it possible to have effective solutions that 
+are easy to use . (Fourkioti s ,2024)  
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 03: METHODOLOGY  
+20222296                                                        25 Time Horizon  Longitudinal Study  We will assess our machine learning models 
+using a combination of quantitative and 
+qualitative approaches. To measure technical 
+performance, we’ll evaluate the Mean Absolute 
+Error (MAE) and Root Mean Square Error 
+(RMSE) through experiments. To ensure the 
+outputs we generate —Financial Planning and 
+Inventory Forecasting —are friendly for non -
+technical end users, we’ll conduct non -technical 
+feedback interviews. (Souhaib Ben Taieb, 2014)  
+Techniques and 
+Procedures (Data 
+& Analysis)  Machine Learning 
+(ML) Pipeline and 
+Data Visualization  The process follows standard machine learning 
+procedures consisting of data pre -processing 
+(including missing value treatment and time -
+series component feature engineering), model 
+selection and training (testing algorithms such as 
+XGBoost and LSTM) and eva luation (using 
+RMSE and MAPE). Visualizing data through 
+graphics like heat maps and scatter plots is 
+required as part of exploratory analysis and for 
+making the final user actionable.  
+Table 6 - Research Methodology  
+ 
+3.3 Development Methodology  
+3.3.1 Requirement Elicitation Methodology  
+The process of identifying and refining the system requirements of the SalesSense project 
+was done as a synthesis of requirement elicitation techniques. The surveys have been used to 
+elicit the input of potential users like the owners of small businesses a nd the retail employees 
+over usability and features needed. The analysis of the documents was conducted based on 
+the current research papers and other similar systems in order to reveal gaps and 
+functionalities. System features were refined in brainstormin g sessions and brought in line 
+with project objectives. Also, it was observed that retail operations would contribute to the 
+comprehension of real -life issues associated with tracking sales and inventory management. 
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 03: METHODOLOGY  
+20222296                                                        26 Functionality of the system was also visualized by prototyping and feedback given to 
+complete the improvement.  
+ 
+3.3.2 Design Methodology  
+SSADM  (Structured Systems Analysis and Design Methodology) or  OOADM  (Object -
+Oriented Analysis and Design Methodology) depending on system structure.  
+ 
+3.3.3 Programming Paradigm  
+A combination of programming paradigms was used in the development of the system to 
+ensure flexibility and efficiency. The implementation primarily follows Object -Oriented 
+Programming (OOP) principles, enabling modular design and code reusability in the ba ckend 
+developed using Python.Structured programming was applied for handling data preprocessing 
+and model execution tasks, ensuring a clear and logical flow of operations. In addition, 
+functional programming concepts were utilized in data transformation an d feature 
+engineering processes, particularly for handling time series data.The frontend of the system 
+was developed using React, following a component -based architecture to support modular 
+and maintainable user interface design.  
+ 
+3.3.4 Testing Methodology  
+System test methodology of the system is in form of both model -level and system -level 
+testing. A model testing was done to understand the accurateness of the forecasting model 
+using the regression measures of RMSE, MAE, MAPE, and R 2. Also, the prototype t esting 
+was conducted to evaluate the work of the whole system, API functionality, data processing, 
+and interaction with the interface. This hybrid solution guarantees technical accuracy and 
+healthy functionality of the system.  
+ 
+3.3.5 Solution Methodology  
+1. Dataset Collection: historical monthly sales dataset collected from the retail shop  
+2. Data Preprocessing: Clean and preprocess data, ensuring it is ready for training.  
+3. Feature Selection and Engineering:  Extract  time-based and lag features such as 
+previous sales (Lag1, Lag2, Lag3), rolling statistics, and seasonal indicators  
+4. Model Selection: Select an appropriate model (e.g., XGBoost) based on performance 
+metrics such as RMSE and MAE.  
+5. Model Training: Train the model using the preprocessed dataset.  
+6. Testing: Evaluate the model’s performance metrics and interpretability analysis will 
+be conducted using the SHAP framework.  
+7. Feedback Loop: Refine the model based on evaluation results and performance 
+metrics.  
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 03: METHODOLOGY  
+20222296                                                        27 3.4 Project Management Methodology  
+ 
+Given the limitations of a final year timeline, the project management methodology chosen 
+for this research project is essential for handling the intricate, iterative nature of Machine 
+Learning (ML) development. The strategy is usually based on the Agile m ethodology, which 
+is popular due to its high level of stakeholder interaction, iterative process, and adaptability to 
+changing output requirements as the model is being refined. To strike a balance between the 
+rigorous documentation requirements of academi c research and the development flexibility 
+required for an ML model, a hybrid approach, like Agile PRINCE2, can be used.  
+ 
+3.4.2 Schedule  
+3.4.2.1 Gantt Chart  
+Time Schedule  displays the visual representation of the Gantt chart.  
+3.4.2.2 Deliverables: Literature review, prototype development, final report submission.  
+Deliverables  Dates  
+Formative Submission of Initial Project Proposal  10th October 2025  
+Formative Submission of Literature Review  10th October 2025  
+Summative Submission of Project Proposal and 
+Requirement Specification  13th November 2025  
+Summative Submission of Interim Progress 
+Demonstration  30th January 2026  
+Summative Submission of Final Project Thesis  30th March  2026  
+Final Project Viva  26th April 2026 to 20th May 2026  
+Table 7 - Deliverables  
+ 
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 03: METHODOLOGY  
+20222296                                                        28 3.4.3 Resource Requirements  
+3.4.3.1 Data  
+The project will utilize historical sales transaction data collected from a local food ingredients 
+(spices) retailer.  
+ This dataset will include:  
+● Daily and  monthly sales quantities, product  names , and pricing details (MRP, cost)..  
+If required, supplementary or synthetic datasets may be used to simulate missing data and 
+enhance model training.  
+This data will be stored and processed in CSV/Excel format within the code file.  
+ 
+3.4.3.2 Skills  
+To successfully develop and implement the ML -based forecasting framework, the following 
+technical and analytical skills are required:  
+● Machine Learning & Deep Learning  – for developing and comparing models such 
+as XGBoost .  
+ 
+● Python Programming  – for data preprocessing, feature engineering, model training, 
+and evaluation.  
+ 
+● Data Science & Statistical Analysis  – for exploratory data analysis (EDA), time 
+series decomposition, and accuracy measurement (RMSE, MAE, MAPE).  
+ 
+● Data Visualization  – using Matplotlib, Seaborn, or Plotly to create dashboards and 
+graphs for interpretability.  
+ 
+● Model Explainability  – using SHAP or feature importance to ensure transparency for 
+non-technical stakeholders.  
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 03: METHODOLOGY  
+20222296                                                        29 3.4.4 Risk and Mitigation  
+Risk Severity   Frequency   Mitigation Strategy  
+Insufficient training 
+data 5 3 Use data augmentation or synthetic data 
+generation. Collect additional sales records and 
+external features (e.g., seasonal or promotional 
+data).  
+Poor model accuracy  4 3 Perform hyperparameter tuning, cross -validation, 
+and comparative testing between XGBoost, and 
+other  models.  
+Overfitting  5 4 Regularization (L1/L2), early stopping, and cross -
+validation for generalization.  
+Hardware limitations  3 2 Utilize cloud -based environments such as Google 
+Colab Pro or AWS for large -scale training.  
+Data quality issues 
+(missing, noisy, or 
+inconsistent data)  4 4 Implement preprocessing pipelines for data 
+cleaning, imputation, and normalization before 
+model training.  
+Stakeholder 
+dissatisfaction  3 3 Periodic feedback sessions and user testing with 
+small business owners and managers for 
+dashboard/report refinements.  
+Delays in model 
+training  3 3 Code optimization, efficient libraries (NumPy, 
+Pandas), and parallel computation.  
+Model interpretability 
+concerns (black -box 
+perception)  3 3 Integrate SHAP or feature -importance 
+visualization for enhanced transparency for 
+business users.  
+Table 8 - Risk & Mitigation  
+ 
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 03: METHODOLOGY  
+20222296                                                        30 3.5 Chapter Summary  
+The chapter gives a general introduction to the approach that has been employed in the 
+creation of the Machine Learning -based Sales Forecasting System.  It adheres to the Research 
+Onion framework by Saunders by utilizing a practical philosophy and a mixed -method 
+approach, which involves the assessment of the models quantitatively and the stakeholders 
+qualitatively.  It is possible to divide the development process into requirement elicitation, 
+design, programming, testing, and an ML pipeline between data coll ection and evaluation.  A 
+hybrid Agile -PRINCE2 methodology is applied to project management as it has clear scope, 
+schedule, and resources and plans related to the mitigation of risk to achieve a successful 
+project implementation and dependable forecasting results.  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                               CHAPTER 04: SRS  
+20222296                                                        31 Chapter 04: System Requirement Specification (SRS)  
+ 
+4.1 Chapter Overview  
+This chapter gives a general overview of the general methodology that has been used in coming 
+up with the Machine Learning -based Sales Forecasting System.  It also conforms to the 
+Research Onion framework by Saunders in that it embraces a pragmatic philosophy and mixed -
+method approach; i.e. evaluating a quantitative model and a qualitative stakeholder response.  
+It can be divided into the development process of requirement elicitation, design, programming, 
+testing, and an ML pipeline of data collection to eva luation.  The hybrid Agile -PRINCE2 
+approach is applied to project management, which specifies the scope, timeline, and resources 
+and plans on how risk can be addressed to improve the execution of projects and ensure 
+successful forecasting results.  
+  
+4.2 Rich Picture Diagram  
+ 
+Figure 1 - Rich Picture Diagram  
+
+ML-Based Sales Forecasting for Retail Spices                               CHAPTER 04: SRS  
+20222296                                                        32 4.3 Stakeholder Analysis  
+4.3.1 Stakeholder Onion Model  
+ 
+ 
+Figure 2 - Onion Modal Diagram  
+ 
+ 
+ 
+ 
+ 
+
+ML-Based Sales Forecasting for Retail Spices                               CHAPTER 04: SRS  
+20222296                                                        33 4.3.2 Stakeholder Viewpoints  
+Stakeholder  Role/Category  Viewpoint/Expectation  
+Business Owners / 
+Managers  Functional 
+Beneficiary / 
+Decision Makers  The strategic planning, operational 
+optimization, and general profitability require 
+accurate sales projections.  There should be 
+dependable long -term predictions (a six -month 
+prediction) to help business develop.  They must 
+expect that the system will help them make data -
+driven decisions.  Projections are needed so as to 
+enable effective allocation of resources.  Need a 
+system reasonably priced and reasonably easy to 
+use? The sales projections are likely to be in a 
+graphical format in order to facilitate in 
+understanding and making decisions.  Strive to 
+achieve high prediction accuracy, occasionally 
+at 70 percent or more.  
+Inventory Managers 
+/ Stock Keepers  Operational 
+Beneficiary  Accurate predictions are needed in order to 
+organize production scheduling efficiently and 
+ensure that inventory is strictly controlled.  There 
+should be predictions to prevent shortages and 
+over inventory and this will reduce loss of 
+revenue.  Minimize stock -out (waste) and 
+maximize sales (do not understock).  The system 
+should schedule items, and it should have an 
+easy-to-use and intuitive user interface (UI) to 
+help a user analyze the sales trends without 
+relying on a complex technical background.  
+ML-Based Sales Forecasting for Retail Spices                               CHAPTER 04: SRS  
+20222296                                                        34 Data Scientists / ML 
+Engineers  Operational 
+Maintenance / 
+Developer  Focus on machine learning model and code 
+implementation and execution of the system.  
+Algorithms (XGBoost) should be selected and 
+proper training and evaluation done on the 
+model.  Successful model training requires the 
+data to be clean and well -formatted (i.e. CSV 
+format).  Later addition to make the system 
+better and easier to debug, expect the underlying 
+system design to be modular, scalable and 
+maintainable.  
+ 
+Financial Planners / 
+Investors  Financial Beneficiary  
+Look for system output  that can help you with 
+financial planning  and forecasting into the 
+future. fixed on extracting as much income as 
+possible and delivering a measurable  return on 
+investment (ROI).  
+ 
+Customers / End -
+Users  Positive Stakeholder  
+Expect greater availability of  products to 
+reduce the chance of encountering out -of-stock 
+items. for their demands, needs, and wants to be 
+regularly met in order to ensure they're happy 
+with the  provided services.  
+ 
+  
+System 
+Administrators / IT 
+Support  Operational 
+Administration  Require that the system is reliable, secure and 
+can be easily installed in the work place.  To be 
+able to deal with growth in data and user base, it 
+is required there to be a certain level of 
+scalability in the application.  
+ 
+ML-Based Sales Forecasting for Retail Spices                               CHAPTER 04: SRS  
+20222296                                                        35 Competitors  Negative Stakeholder  With reference to the system features, try to 
+develop a comparable or superior solution (e.g., 
+predicting sales using ML). If the SME has 
+problems with inventory control or the supply 
+chain, they might try to capitalize.  
+Regulatory 
+Authorities / 
+Government  Political Beneficiary / 
+Regulators  Careful about ensuring the company adheres to 
+the laws and regulations, including taxes, must 
+ensure that the manner in which the company 
+manages its sales and customer data is not 
+violating any of the relevant data privacy and 
+data protection laws (e.g., the GDPR 
+compliance, addressing ethical concerns related 
+to data analysis).  
+ 
+Table 9 - Stakeholder Viewpoint  
+ 
+4.4 Selection of Requirement Elicitation Methodologies  
+ 
+Various methods were used to collect the requirements of the Sales prediction and Inventory 
+Forecasting System based on machine learning in this project.  Each methodology was chosen 
+because of the capacity to collect the right, relevant, and viable insights of the stakeholders and 
+experts in the field.  
+4.4.1 Literature review  
+The Literature Review methodology provided significant information about the body of 
+existing literature and other solutions that the researchers have recently suggested and 
+implemented.  This also enabled to get a clearer insight into the reinforcement learning and 
+methods and the research gaps.  
+4.4.2 Surveys / Questionnaires:  
+Speaking of collecting quantitative data about the user expectations, the features that they 
+would desire in the system, and the visualization forms, surveys were distributed among the 
+potential end users, such as sales analysts and employees.  The focus on the dashboard design, 
+frequency of forecasts and notification methods were made in part due to the feedback.  
+  
+ML-Based Sales Forecasting for Retail Spices                               CHAPTER 04: SRS  
+20222296                                                        36 4.4.3 Brainstorming Sessions and Focus Group Discussions:  
+In order to enhance the system requirement, managers, IT personnel, and small business owners 
+were involved in joint sessions.  These discussions generated key ideas in such areas as 
+dashboard customization, user -based access, and integration with external databases.  
+ 
+4.5 Discussion of Findings  
+4.5.1 Literature Review Findings  
+Citation  Findings  
+(Bohanec, Kljajič Borštnar, 
+& Robnik -Šikonja , 2016), 
+(Davinder Pal Singh, 2023)  Limited research exists on the interpretability of high -performing 
+ML models like XGBoost (often categorized as non -transparent 
+black -box models), which is necessary for managers to trust the 
+forecast and justify strategic decisions.  
+(Davinder Pal Singh, 2023)  There is a recognized need for more diverse datasets across 
+various market segments to validate the generalizability of 
+predictive models, as much research relies on generalised 
+datasets.  
+(Y.K.Anuda Harishchandra, 
+2025)  Accurate forecasting is crucial for Small and Medium Enterprises 
+(SMEs) to maintain profitability and attain long -term business 
+growth by mitigating operational and financial risks associated 
+with inventory mismanagement.  
+ 
+Table 10 - Literature Review Findings  
+ 
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                               CHAPTER 04: SRS  
+20222296                                                        37 4.5.2 Survey Findings  
+Question  How familiar are you with the concept of sales 
+forecasting and machine learning applications in retail 
+business?  
+Aim of the Question  To determine how familiar the respondents are with the 
+concept of sales forecasting and the use of ML in retail.  
+Findings & Conclusion  The survey results indicate that 42.4% of respondents are 
+somewhat familiar, 33.3% are not familiar, and 24.2% are 
+moderately familiar. This shows that a considerable portion 
+of respondents lack a deep understanding of these 
+technologies, validating the ne ed for awareness and 
+simplified tools in this area.  
+ 
+Question  How useful do you think a machine learning –based 
+forecasting system would be for helping retailers (e.g., 
+spice shops) manage inventory and finances?  
+Aim of the Question  To assess how respondents perceive the usefulness of ML -
+based systems in retail operations.  
+Findings & Conclusion  Findings reveal that 45.5% consider it very useful, 39.4% 
+useful, and 15.2% slightly useful. This indicates strong 
+positive feedback, suggesting that such systems would be 
+highly valued by retailers.  
+ 
+
+ML-Based Sales Forecasting for Retail Spices                               CHAPTER 04: SRS  
+20222296                                                        38 Question  Which of the following features do you believe are most 
+important in such a system?  
+Aim of the Question  To identify which system features respondents prioritize 
+most.  
+Findings & Conclusion  Responses were diverse, with many participants selecting 
+combinations including inventory management, accurate 
+sales prediction, financial budgeting, and visual dashboards. 
+The highest combined preference (12.1%) included all 
+major features, implying that users prefer a comprehensive, 
+all-in-one solution.  
+ 
+Question  How important is it for you to understand how the 
+system makes predictions (model transparency)?  
+Aim of the Question  To determine how much users  value model transparency and 
+interpretability.  
+Findings & Conclusion  About 45.5% of respondents rated it important, 24.2% 
+slightly important, and 24.2% very important, while 6.1% 
+found it not important. This suggests that most users 
+appreciate having insights into how predictions are made, 
+though full transparency is not a top priority for everyone.  
+ 
+Question  If such a system were available for small retailers, how 
+likely do you think they would adopt it?  
+
+ML-Based Sales Forecasting for Retail Spices                               CHAPTER 04: SRS  
+20222296                                                        39 Aim of the Question  To gauge the likelihood of adoption among small retailers.  
+Findings & Conclusion  Results show 57.6% think retailers are likely to adopt the 
+system, 24.2% unlikely, and 18.2% very likely. This 
+suggests a strong market potential with some skepticism 
+possibly due to cost or complexity concerns.  
+ 
+Question  How confident are you in interpreting charts or graphs 
+showing sales trends and forecast results?  
+Aim of the Question  To understand users’ confidence in reading visual data 
+representations.  
+Findings & Conclusion  The findings indicate 42.4% are confident, 30.3% somewhat 
+confident, 21.2% very confident, and 6.1% not confident. 
+This highlights that most users are comfortable with visual 
+insights, supporting the inclusion of data visualization 
+features.  
+ 
+Question  How important do you think visualization features (such 
+as trend graphs, prediction comparison charts, or 
+dashboards) are in understanding the system’s output?  
+Aim of the Question  To evaluate the perceived importance of visualization in the 
+system.  
+
+ML-Based Sales Forecasting for Retail Spices                               CHAPTER 04: SRS  
+20222296                                                        40 Findings & Conclusion  The majority (48.5%) rated visualization as important, 
+33.3% as very important, and 18.2% as slightly important. 
+The results emphasize that visual outputs are essential for 
+user understanding and engagement.  
+ 
+Question  What improvements or additional features would you 
+suggest for a sales forecasting system designed for small 
+businesses?  
+Aim of the Question  To collect user feedback and recommendations for system 
+enhancement.  
+Findings & Conclusion  Responses were evenly distributed: easy way of 
+approaching (25%), product -level categorization and 
+forecasting (25%), mobile -friendly interface (25%), and 
+positive feedback indicating satisfaction (25%). This 
+demonstrates user interest in usability, mobili ty, and 
+product -specific insights.  
+Table 11 - Survey Findings  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ML-Based Sales Forecasting for Retail Spices                               CHAPTER 04: SRS  
+20222296                                                        41 4.5.3 Brainstorming/Observation  
+Used with key stakeholders (small business owners, IT staff and managers), brainstorming 
+sessions  and focus groups were the vital requirement elicitation method. These working 
+sessions provided a melting pot of innovation combining technically  feasible sol utions with 
+practical operating realities creating concepts to overcome constraints in traditional 
+retail/inventory systems.  
+ 
+Here is an elaborated discussion of the key features identified:  
+1. Dashboard Customization & Visualization:  
+Stakeholders expressed the need for a user -friendly dashboard that displays graphical 
+representations of sales forecasts and inventory trends. This feature allows non -
+technical users to easily interpret complex data and make informed business 
+decisions. Th e ability to customize filters and export reports in different formats 
+(PDF/Excel) for convenient reporting was also requested.  
+2. Role -Based Access:  
+Considering that multiple users (e.g., managers, analysts, and IT staff) will interact 
+with the system, role -based access was identified as crucial to maintain data security 
+and restrict users to only the necessary features and information.  
+ 
+4.6 Summary of Findings  
+As per the study, to facilitate inventory and financial management, SMEs require accurate 
+and simple to comprehend sales forecasting systems. Even though the awareness about ML -
+based forecasting is moderate, the respondents appreciate the functionality of such systems, 
+such as dashboards, visualization, and inventory tracking, and find them useful. The system 
+will be welcomed and appreciated by the users to some degree of model transparency. To 
+ensure security and usability, the stakeholders emphasized role -based access and 
+customization of dashboards. At that, an easy -to-use machine -learning -based forecasting 
+software against small business is clearly required.  
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                               CHAPTER 04: SRS  
+20222296                                                        42 4.7 Context Diagram  
+ 
+Figure 3 - Context Diagram  
+ 
+4.8 Use Case Diagram  
+ 
+ 
+Figure 4 - Use Case Diagram  
+ 
+
+ML-Based Sales Forecasting for Retail Spices                               CHAPTER 04: SRS  
+20222296                                                        43 4.9 Use Case Descriptions  
+Field  Description  
+Use Case ID  UC-01 
+Use Case Name  Upload Sales Data  
+Actors  Manager (Small Business Owner)  
+Goal  To upload historical Excel/CSV sales files 
+from the spice shop into the system for 
+processing.  
+Preconditions  The manager has access to the system. Raw 
+sales data files are available in Excel or CSV 
+format.  
+Postconditions  Sales data is successfully uploaded and 
+stored, ready for preprocessing.  
+Main Flow  1. Manager navigates to the data upload 
+section.  
+2. Manager selects and uploads the 
+Excel/CSV file.  
+3. System confirms the file has been 
+received and queued for preprocessing.  
+Field  Description  
+Use Case ID  UC-02 
+Use Case Name  Preprocess Data  
+ 
+Actors  System (automated via data_processor.py)  
+Goal  To automatically clean, standardize dates, 
+and handle missing values in the uploaded 
+sales data.  
+Preconditions  Raw sales data has been uploaded 
+successfully (UC01 completed).  
+ML-Based Sales Forecasting for Retail Spices                               CHAPTER 04: SRS  
+20222296                                                        44 Postconditions  A cleaned, structured dataset is prepared and 
+available for model training and forecasting.  
+Main Flow  1. System reads the uploaded raw file.  
+2. System removes duplicates and handles 
+missing values.  
+3. System standardizes date formats and 
+encodes categorical fields.  
+4. Cleaned dataset is saved and flagged as 
+ready for forecasting.  
+Field  Description  
+Use Case ID  UC-03 
+Use Case Name  Manager (Small Business Owner)  
+Actors  Small Business Owner  
+Goal  To produce a 6 -month predictive sales 
+forecast using the trained XGBoost 
+regression model.  
+Preconditions  Cleaned historical sales data is available. 
+The XGBoost  model has been trained on that 
+data.  
+Postconditions  A visual and numerical 6 -month sales 
+forecast report is generated and displayed on 
+the dashboard.  
+Main Flow  1. Manager triggers the forecast from the 
+dashboard.  
+2. System feeds cleaned data and lag/rolling 
+features into the XGBoost model.  
+3. Model generates month -by-month 
+revenue predictions.  
+4. System displays the forecast as a chart 
+and tabular report.  
+Field  Description  
+Use Case ID  UC-04 
+ML-Based Sales Forecasting for Retail Spices                               CHAPTER 04: SRS  
+20222296                                                        45 Use Case Name  Adjust Scenario Parameters  
+ 
+Actors  Manager (Small Business Owner)  
+Goal  To simulate different business scenarios by 
+adjusting impact factors such as price 
+changes or demand surges and observe their 
+effect on the forecast.  
+Preconditions  A baseline 6 -month forecast has already 
+been generated (UC03 completed).  
+Postconditions  A revised forecast reflecting the adjusted 
+scenario parameters is displayed for 
+comparison.  
+Main Flow  1. Manager navigates to the scenario 
+adjustment panel.  
+2. Manager inputs impact factors (e.g., 
++10% price, seasonal demand surge).  
+3. System recalculates the forecast using the 
+modified parameters.  
+4. Updated forecast is displayed alongside 
+the baseline for comparison.  
+Field  Description  
+Use Case ID  UC-05 
+Use Case Name  View Business Analytics  
+Actors  Manager (Small Business Owner)  
+Goal  To view profit margins, top -performing 
+products, and inventory requirements 
+through an analytics dashboard.  
+ML-Based Sales Forecasting for Retail Spices                               CHAPTER 04: SRS  
+20222296                                                        46 Preconditions  Sales data has been uploaded and processed. 
+At least one forecast has been generated.  
+Postconditions   
+Key business metrics are displayed visually on the 
+dashboard for decision -making  
+ 
+Main Flow  1. Manager opens the analytics dashboard.  
+2. System aggregates sales, profit, and 
+inventory data.  
+3. System displays charts for top products, 
+profit trends, and stock requirements.  
+4. Manager reviews insights to support 
+business planning.  
+Field  Description  
+Use Case ID  UC-06 
+Use Case Name  Interpret Model Logic  
+ 
+Actors  Manager (Small Business Owner)  
+Goal  To understand why the model made a 
+specific prediction by viewing SHAP 
+(SHapley Additive exPlanations) values for 
+each feature.  
+Preconditions  A forecast has been generated. SHAP 
+analysis has been computed for the model 
+output.  
+Postconditions  A SHAP summary plot and feature importance 
+rankings are displayed, explaining the model's 
+reasoning.  
+ML-Based Sales Forecasting for Retail Spices                               CHAPTER 04: SRS  
+20222296                                                        47 Main Flow  1. Manager selects a specific forecast 
+period to inspect.  
+2. System computes SHAP values for that 
+prediction.  
+3. System renders a SHAP bar chart 
+showing each feature's contribution.  
+4. Manager interprets which factors (e.g., 
+lag features, rolling averages) most 
+influenced the forecast.  
+Table 12 - UseCase  Description  
+ 
+4.10 Requirements  
+The MoSCoW principle is applied to determine the needs for this system according to its 
+priority level. Both functional and non -functional requirements are categorised using the 
+MoSCoW technique in the sections that follow.  
+ 
+4.10.1 Functional Requirements  
+ID Requirement  Priority (MoSCoW)  
+FR01  Generate 6 -month sales 
+forecast (XGBoost  Must Have  
+FR02  Upload and preprocess 
+datasets (CSV/Excel).  Must Have  
+FR03  Fetching historical processed 
+data via the /sales endpoint.  Must Have  
+FR04  Requesting a 6 -month 
+prediction using the 
+XGBoost model.  Must Have  
+ML-Based Sales Forecasting for Retail Spices                               CHAPTER 04: SRS  
+20222296                                                        48 FR05  Generating the dashboard 
+overview (Profit, Revenue, 
+Trends).  Must Have  
+FR06  Identifying the highest -
+performing spice products.  Should Have  
+Table 13 - Functional Requirements  
+ 
+4.10.2 Non -Functional Requirements  
+ID Non-Functional 
+Requirement  Description  Priority 
+(MoSCoW)  
+NFR01  Performance  The system must 
+generate a sales 
+forecast within an 
+acceptable time 
+frame (e.g., under 10 
+seconds for standard 
+datasets).  Must Have  
+NFR02  Accuracy  The forecasting 
+model should 
+achieve acceptable 
+predictive accuracy 
+(e.g., RMSE or 
+MAPE within 
+industry standards).  Must Have  
+NFR03  Usability  The interface should 
+be intuitive and 
+easily usable by non -
+technical business 
+owners and 
+managers.  Should Have  
+ML-Based Sales Forecasting for Retail Spices                               CHAPTER 04: SRS  
+20222296                                                        49 NFR04  Scalability  The system should 
+support the inclusion 
+of new products, 
+categories, or 
+extended datasets 
+without performance 
+degradation.  Should Have  
+NFR05  Interpretability  The system should 
+include SHAP -based 
+visual explanations 
+to make model 
+predictions 
+transparent and 
+understandable for 
+business users  Could Have  
+Table 14 - Non-functional Requirement  
+ 
+ 
+4.11 Chapter Summary  
+In this chapter, the SRS concerning this project is presented.  This incorporated a stakeholder 
+onion diagram to present the roles and association of the various stakeholders and a rich picture 
+diagram to present the general framework of the system.  In addition,This illuminated the 
+various elicitation methods that were used to collect the system requirements and generalised 
+the findings of every elicitation method.  It also gave an elaborate description of how the system 
+would be used and had recorded the fun ctional and non functional requirements and prioritized 
+them according to their significance.  
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                             CHAPTER 05: SLEP  
+20222296                                                        50 Chapter 5: Social, Legal, Ethical and Professional issues (SLEP)  
+ 
+5.1 Chapter overview  
+ 
+The chapter addresses the Social, Legal, Ethical, and Professional (SLEP) factors that are 
+involved in the formulation and implementation of proposed Machine Learning -based Sales 
+Forecasting System on a specialty retail spice shop. Given that the project w orks with real 
+transactional sales information and produces predictive data, which can be used to make 
+inventory planning, and cash flow decisions, care should be taken to make sure that the system 
+follows responsible computing practices.  
+The development and implementation of this system were guided by the BCS Code of 
+Conduct (British Computer Society, 2021) , which outlines professional responsibilities 
+under four key principles:  
+1. The Public Interest  
+2. Professional Competence and Integrity  
+3. Duty to Relevant Authority  
+4. Duty to the Profession  
+These values were reconsidered and implemented across the project lifecycle to make sure 
+that these factors followed social responsibility, legal requirements, and ethical behavior of 
+AI, and professional ethics.  
+ 
+ 
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                             CHAPTER 05: SLEP  
+20222296                                                        51 5.2 SLEP issues and mitigation  
+The next part constitutes the discussion of the major Social, Legal, Ethical, and Professional 
+concerns that were revealed in the course of the project and the ways they were alleviated.  
+ 
+5.2.1 Social Issues  
+Automation of sales forecasting and inventory planning can help to decrease the role of a 
+manual decision -making by the store staff. This can raise the issue of the lack of human 
+intervention.  
+ 
+To counter this the system was made with a strict design of a decision supporting tool rather 
+than to replace the employees. The ultimate decisions will be left with management. The 
+outputs of the forecasts are shown in graphical and understandable forms t o support the 
+judgment of humans instead of dominating it. This is in accordance with the principle of the 
+BCS of acting in the Public Interest, which makes technology beneficial to the stakeholders.  
+ 
+A second social issue is associated with data bias and poor coverage. As only 1 year of data 
+has been used to train the model on the data of a single retail shop, generalizability can be 
+limited.  
+ 
+This was a limitation that was recorded. It was scoped to be used in a single -store manner and 
+no one was making any statement of the extended applicability in a retail manner. This provides 
+accountability and openness in communicating capabilities of the systems.  
+ 
+ 
+5.2.2 Legal Issues  
+ 
+The project is based on real sales data of a retail business in the form of transactions. Despite 
+the fact that no customer -identifiable information was employed, the records of sales are 
+sensitive business data.  
+ 
+To address data protection and confidentiality concerns, several measures were implemented. 
+No personally identifiable information (PII) was collected or used within the system. The 
+dataset was anonymised prior to model development to ensure privacy. Permi ssion was 
+ML-Based Sales Forecasting for Retail Spices                             CHAPTER 05: SLEP  
+20222296                                                        52 obtained from the business owner before using the data, and the dataset was handled securely 
+without being shared or made publicly accessible.  
+ 
+These measures allow adhering to the principles of data protection and proper data 
+management.The stakeholder feedback was taken during the requirement elicitation. Any 
+information that can be identified must be informed according to the standard of ethics  in 
+research. To address ethical concerns related to participant involvement, appropriate measures 
+were implemented. Interview responses were anonymised to protect participant identity, and 
+no personal information was disclosed without prior consent. Partic ipants were clearly 
+informed about the purpose of the research before their involvement, ensuring transparency 
+and ethical compliance.  
+ 
+5.2.3 Ethical Issues  
+ 
+The XGBoost machine learning models are also perceived to be black -box systems. When 
+predictions make a difference in financial decisions and this is not transparent, ethical issues 
+can come about.  
+ 
+In response to this, SHAP ( SHapley Additive Explanations) was added to improve the 
+interpretability. Importance of features was also given to show how the predictions were made. 
+This justifies the use of AI ethically and fits in the BCS codes of conduct r elated to integrity 
+and transparency.  
+ 
+The use of automated forecasts can cause over -reliance on the part of the user and this can end 
+up in inaccurate decision making in case decision users fail to critically analyze the prediction. 
+To avoid such a situation, common measures of evaluation like  MAE, RMSE, and MAPE are 
+presented to show the robustness of the predictions. Moreover, the results of prediction are 
+shown in a transparent and understandable format. It also invites users to use model predictions 
+along with domain knowledge and hands -on experience in making business decisions.  
+Also, integrity in the research was ensured through honest reporting of research findings, not 
+manipulating data, and using relevant cross -validation.  
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                             CHAPTER 05: SLEP  
+20222296                                                        53 5.2.4 Professional Issues  
+ 
+The creation of the ML -based forecasting system presupposes the skills in the data 
+preprocessing, time series modelling, and statistical evaluation. Creating untrustworthy 
+products because of a lack of knowledge would be a violation of professionalism.  
+ 
+In order to partially eliminate possible risks and guarantee the validity of the study, the 
+extensive literature review was performed to find appropriate practices and methods. Several 
+machine learning models were tested or compared in a similar fashion wi th the help of 
+consistent benchmarking procedures to give a fair and accurate results. Model performance 
+was verified with standard assessment metrics and the whole experience of developing and 
+assessing the model was well documented to ensure transparency  and replicability.  
+ 
+Academic integrity was also maintained by citing it properly, implementing it originally and 
+reporting it clearly on limitations of the system.  
+ 
+5.2.5 SLEP Summary Table  
+ 
+Social  Legal  
+● Reduced reliance on manual decision -
+making.  
+● Risk of dataset bias (single -store data).  
+● Responsible AI deployment in SME context.  ● Protection of business sales data.  
+● Anonymization of records.  
+● Informed consent for stakeholder 
+feedback.  
+● Compliance with data protection 
+principles.  
+Ethical  Professional  
+ML-Based Sales Forecasting for Retail Spices                             CHAPTER 05: SLEP  
+20222296                                                        54 ● Black -box nature of ML models.  
+● Risk of blind trust in automated forecasts.  
+● Need for transparent reporting of accuracy.  ● Adherence to BCS Code of Conduct.  
+● Maintenance of academic integrity.  
+● Competent implementation and 
+benchmarking.  
+● Proper documentation and citation.  
+     Table 15: SLEP Summary Table  
+5.3 Chapter summary  
+The chapter has explored the Social, Legal, Ethical, and Professional (SLEP) issues related to 
+the development of the Sales Forecasting System based on machine learning in a specialty 
+retail spice shop. Considering the fact that the system deals with real business data and that 
+the system will affect the financial and inventory decisions, the appropriate system design 
+and deployment were mandatory.  
+In the social context, the system was placed as a decision support tool so as to see that it 
+complements the human decision making and not to substitute it. The legal issues of business 
+data confidentiality and consent of stakeholders were discussed via an onymization, limited 
+data sharing practices and informed consent. The lack of transparency in models, and 
+excessive use of automated predictions, were addressed by including explainability methods 
+(SHAP) and properly reporting on the performance metrics. I n terms of profession, the 
+project complied with the BCS Code of Conduct since it was technically competent and 
+academically honest and documentation was transparent.  
+Comprehensively, in the present project, the fact that sophisticated predictive analytics could 
+be applied in a rather responsible way in a small retail setting, when the right precautions, 
+transparency and professional frameworks are observed
+ML-Based Sales Forecasting for Retail Spices                           CHAPTER 06: Design  
+20222296                                                        55 Chapter 6 : Design  
+6.1 Chapter Overview  
+ 
+In this chapter, the system design of the proposed Machine Learning based Sales Forecasting 
+and Inventory Planning System is outlined that was created to address the needs of a specialty 
+retail spice shop. The design phase will convert the requirements est ablished in Chapter 4 
+(Software Requirements Specification) into a formal structure of architectural and 
+component -level map that will be used to implement it.  
+The design stage is aimed at making sure that the system architecture, the data flow and the 
+modelling elements are designed in a way that fulfills both the non -functional requirements 
+(e.g. performance, accuracy, usability, maintainability) and functional  requirements (e.g. 
+sales forecasting, inventory estimation, performance evaluation).  
+The design process entails the identification of the overall system architecture besides making 
+sure that everything works very well together. It involves the development of a powerful data 
+processing and machine learning pipeline capable of managing data preparation, training of 
+the model and prediction. Moreover, it entails the design of model evaluation and 
+explainability elements to evaluate performance and give an insight into model behavior. The 
+process also provides alignment to the system -wide quali ty attributes like scalability, 
+reliability and efficiency as well as converting the research objectives to the practical and 
+implementable modules in the system.  
+The chapter thus shows how the proposed design is capable of supporting the research 
+purpose to develop a valuable and interpretable system along with a 6 month forecasting 
+system that is business oriented and specific to SME retail settings.  
+ 
+6.2 Design Goals  
+The design objectives determine the important quality characteristics that guide the system 
+architecture and implementation. They are direct objectives based on the Non -Functional 
+Requirements (NFRs) of the SRS chapter and applied to all the parts of the s ystem.  
+1. Accuracy  
+Goal:  
+➔ The system should be able to produce the sales forecasts that are reliable and 
+statistically proven to assist in making inventory and financial planning decisions.  
+Design Strategy:  
+ML-Based Sales Forecasting for Retail Spices                           CHAPTER 06: Design  
+20222296                                                        56 ➔ Application of managed machine learning models (XGBoost and comparative 
+models).  
+➔ Application of feature engineering such as time -based variables and cyclic encoding.  
+➔ Performance appraisal of MAE, RMSE, MAPE and R 2.  
+➔ Use of cross -validation method to guarantee temporal integrity.  
+➔ Honesty is the key of the research purpose and the quality of inventory and cashflow 
+analysis . 
+2. Performance Efficiency  
+Goal:  
+➔ The system should have the ability to provide predictions in reasonable time limits 
+without incurring too much computation.  
+Design Strategy:  
+➔ XGBoost is used because it is computationally efficient with structured tabular data.  
+➔ Selective dimensionality to remove unnecessary dimensions.  
+➔ Serialization of model (pickle format) to prevent retraining on prediction stage.  
+➔ 6-month projections made using batch forecasting method.  
+➔ This makes the system viable to the SME setting having fewer computing capabilities.  
+3. Usability  
+Goal:  
+➔ Forecasts should be easily interpreted and made understandable to non technical 
+stakeholders in retailing.  
+Design Strategy:  
+➔ Graphical plotting - charting of historical sale and forecasted sales.  
+➔ Forecast results in tabular form and summary form.  
+➔ SHAP -based explainability was integrated to understand feature importance.  
+➔ Good presentation of evaluation metrics.  
+➔ The design will make the system a decision -support tool and not a strictly technical 
+model of ML.  
+ 
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                           CHAPTER 06: Design  
+20222296                                                        57 4. Interpretability  
+Goal:  
+➔ The model has to offer clear explanations to its predictions.  
+Design Strategy:  
+➔ SHAP (SHapley Additive Explanations) integration.  
+➔ Visualization using the ranking of feature importance.  
+➔ Determination of seasonal and trend effect on prediction.  
+➔ It is a direct contribution to the principles of ethical AI and it is aligned with the 
+objective of the research explainable forecasting.  
+ 
+6.3 System Architecture Diagram  
+ 
+    Figure 7:System Architecture Diagram  
+ 
+ 
+
+ML-Based Sales Forecasting for Retail Spices                           CHAPTER 06: Design  
+20222296                                                        58 The architecture consists of three primary layers:  
+1. Presentation Layer  
+2. Application / Business Logic Layer  
+3. Data Layer  
+This structure supports maintainability, scalability, and clear integration of forecasting, 
+evaluation, and explainability components.  
+1. Presentation Layer (UI)  
+The Presentation Layer is in charge of the interaction with the user and visualization of the 
+results.  
+The design process entails the identification of the overall system architecture besides making 
+sure that everything works very well together. It involves the development of a powerful data 
+processing and machine learning pipeline capable of managing data preparation, training of the 
+model and prediction. Moreover, it entails the design of model evaluation and explainability 
+elements to evaluate performance and give an insight into model behavior. The process also 
+provides alignment to the system -wide quali ty attributes like scalability, reliability and 
+efficiency as well as converting the research objectives to the practical and implementable 
+modules in the system.  
+This layer provides usability and interpretability so that the retail stakeholders can interpret 
+predictions without technical expertise. The system is a decision support system, and not an 
+automated decision -maker.  
+2. Application / Business Logic Layer.  
+This is the heart of the processing of the system and it is subdivided into three major segments:  
+a) Data & Feature Processing  
+● Data preprocessing  
+● Cleaning and aggregation  
+● Feature engineering  
+b) Modelling & Evaluation  
+ML-Based Sales Forecasting for Retail Spices                           CHAPTER 06: Design  
+20222296                                                        59 ● Training of ML models (XGBoost and comparative models)  
+● Statistical evaluation of the model.  
+● Cross -validation  
+c) Engines & Business Logic  
+● 6-Month Forecasting Engine  
+● Inventory Revenue Estimation Logic.  
+● SHAP Explainability Engine  
+This layer has given the research purposes a reality of converting past sales records into 
+readable future predictions and business information.  
+3. Data Layer  
+Data Layer Data Layer contains and maintains all the data components in the system:  
+● Retail sales dataset  
+● Cleaned and aggregated data  
+● Trained model file  
+● Forecast output results  
+It provides integrity of data, organization of data and restricted access. Model serialization 
+enables trained models to be reused during prediction.  
+6.4 Detailed Design  
+This part will provide the detailed design of SalesSense system in terms of Object -Oriented 
+Analysis and Design (OOAD). The detailed design is intended to establish the internal 
+structure, interaction between components and how the system will operate abov e the high -
+level architecture that is provided in Section 6.3.  
+The following design diagrams are included:  
+● Activity Diagram  
+● Sequence Diagram  
+● Class Diagram  
+● Data Processing & Model Pipeline Diagram  
+Each diagram represents a different perspective of the system.  
+ML-Based Sales Forecasting for Retail Spices                           CHAPTER 06: Design  
+20222296                                                        60 6.4.1 Activity Diagram  
+    Figure 8:Activity Diagram  
+The Activity Diagram shows all the workflow of the forecasting system which starts with data 
+loading and ends with the visualization of the final result. It is a logical control flow and 
+decision -making process in the system.  
+
+ML-Based Sales Forecasting for Retail Spices                           CHAPTER 06: Design  
+20222296                                                        61  
+It can start by loading the retail data, then cleaning and aggregating the data and engineering 
+features. Training and evaluation of the ML model is then done. In case the performance is 
+unsatisfactory, hyperparameter optimization and re -training is done. After the satisfactory 
+performance has been obtained, the system creates a 6 -month forecast, calculates inventory 
+and revenue projections, conducts SHAP analysis, and presents the final results.  
+ 
+This has been illustrated in this diagram showing how model optimization is an iterative 
+process and one that has to be accurate before deployment.  
+ 
+ 
+6.4.2 Sequence Diagram  
+ 
+ 
+    Figure 9:Sequence Diagram  
+ 
+The Sequence Diagram shows the interactions between components of the system with time as 
+a user requests a forecast.  
+ 
+ 
+ 
+
+ML-Based Sales Forecasting for Retail Spices                           CHAPTER 06: Design  
+20222296                                                        62 The flow of interactions involves:  
+1. Forecasting via User Interface.  
+2. Forecast generation is initiated by application logic.  
+3. Trained model is loaded  
+4. Preprocessing and feature engineering are used.  
+5. Predictions and measures of evaluation are produced.  
+6. SHAP analysis is performed  
+7. The outcomes of the forecast and visualizations are sent back to the UI.  
+ 
+This diagram identifies only the runtime communication with the modules and ensures a tight 
+separation of presentation, business logic, data modules and explainability engine.  
+ 
+ 
+6.4.3 Class Diagram  
+ 
+ 
+    Figure 10:Class Diagram  
+
+ML-Based Sales Forecasting for Retail Spices                           CHAPTER 06: Design  
+20222296                                                        63 The Class Diagram establishes the object -oriented design of the system through the 
+determination of core classes, attributes and methods.  
+ 
+Key classes include:  
+1. SalesData - Processes the data loading, cleaning and aggregation.  
+2. FeatureEngineer - Generates time and seasonal features.  
+3. MLModel -Training, prediction, saving, and loading.  
+4. Evaluator -Computes MAE, RMSE and MAPE.  
+5. ForecastEngine - 6-month forecasting.  
+6. InvCalc - Predicts inventory and turnover.  
+7. SHAPAnalyzer  - Does feature importance analysis.  
+ 
+Modularity and maintainability is guaranteed by the relationships between classes. The 
+MLModel  is the core elements of forecasting, evaluation, and explainability modules.  
+ 
+ 
+6.4.4 Data Processing & Model Pipeline Diagram  
+ 
+   Figure 11 : Data Processing & Model Pipeline Diagram  
+ 
+This graph shows the internal machine learning pipeline and data transformation process.  
+ 
+The pipeline consists of:  
+Data Preprocessing → Feature Engineering → Model Training (XGBoost) → Model 
+Evaluation → Forecast Engine → Inventory & Revenue Module → SHAP Explainability  
+ 
+
+ML-Based Sales Forecasting for Retail Spices                           CHAPTER 06: Design  
+20222296                                                        64 The trained model is saved and reused to generate predictions and explanations, forming an 
+organized pipeline that ensures consistent and reliable operation. This approach guarantees 
+reproducibility by allowing the same results to be obtained across differ ent runs, improves 
+efficiency by avoiding repeated training, and enables clear decoupling between the training and 
+prediction phases. Additionally, it supports informed business decision -making by providing 
+reliable forecasts and interpretable insights.  
+ 
+6.5  Algorithm Design  
+ 
+The core of the forecasting system relies on the XGBoost (Extreme Gradient Boosting) 
+algorithm for revenue prediction and a linear trend analysis for inventory forecasting. This 
+section details the algorithmic approach used to transform raw data into actio nable insights.  
+ 
+ 
+ALGORITHM: SalesAndInventoryForecasting  
+INPUT: Raw Sales Data (CSV, Excel files containing 'Particulars', 'Quantity', 'Value')  
+OUTPUT: 6 -Month Revenue Forecast, Next Month Inventory Recommendations  
+// PART 1: Data Ingestion & Cleaning (ETL)  
+FUNCTION ProcessData(directory):  
+   Initialize empty collection `CleanedData`  
+   
+   FOR EACH file in directory DO:  
+       Locate Header Row (Find "Particulars")  
+       Map Date Columns based on headers  
+       
+       FOR EACH Row in file DO:  
+           Extract `Product Name`  
+           IF row is valid Product THEN:  
+               FOR EACH `Date` in map DO:  
+                   Extract `Quantity` and `Value`  
+                   Clean values (Remove "kgs", ",", handles NaNs)  
+                   Add {Date, Product, Quantity, Value} to `CleanedData`  
+               END FOR  
+           END IF  
+       END FOR  
+   END FOR  
+   
+   RETURN `CleanedData`  
+// PART 2: Forecasting Engine  
+FUNCTION GenerateForecast(CleanedData):  
+   // A. Financial Forecasting (XGBoost)  
+   AggregatedData = Group `CleanedData` by Month (Sum of Value)  
+ML-Based Sales Forecasting for Retail Spices                           CHAPTER 06: Design  
+20222296                                                        65    Add Feature `TimeIndex` (0, 1, 2 ... N) representing months  
+   
+   Split Data into Features (X) and Target (y)  
+   
+   Initialize XGBRegressor:  
+       - Objective: 'reg:squarederror'  
+       - N_Estimators: 100  
+       - Learning_Rate: 0.05  
+       
+   Train Model(X, y)  
+   
+   Generate `FutureIndices ` for next 6 months  
+   `RevenueForecast` = Model.Predict(`FutureIndices`)  
+   
+   // B. Inventory Recommendation (Product -Level)  
+   `TopProducts` = Identify Top 5 Products by Total Revenue  
+   
+   Initialize `InventoryPlan`  
+   
+   FOR EACH `Product` in `TopProducts` DO:  
+       Get Monthly Quantity History  
+       // Calculate Trend Slope  
+       Slope = (LastQuantity - FirstQuantity) / TotalMonths  
+       `PredictedQty` = LastQuantity + Slope  
+       
+       Determine Status:  
+           IF `PredictedQty` > CurrentAverage THEN  
+               Status = "Stock Up"  
+           ELSE  
+               Status = "Sufficient"  
+       
+       Add to `InventoryPlan`  
+   END FOR  
+   
+   RETURN `RevenueForecast`, `InventoryPlan`  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                           CHAPTER 06: Design  
+20222296                                                        66 6.6  UI Design  
+ 
+This section outlines the layout and design decisions for the frontend dashboard. The interface 
+is designed to be intuitive, ensuring that complex machine learning insights are accessible to 
+non-technical users (business owners).  
+ 
+ 
+ 
+ 
+     Figure 11 : UI Diagram  
+ 
+ 
+
+ML-Based Sales Forecasting for Retail Spices                           CHAPTER 06: Design  
+20222296                                                        67 6.7  Chapter Summary  
+ 
+This chapter contained the entire system design of SalesSense forecasting system. The design 
+stage converted the non -functional and functional requirements into a layered architecture 
+structure that comprised presentation, business logic, and data layers.O bject -Oriented 
+Analysis and Design (OOAD), such as the activity diagram, sequence diagram, class 
+diagram, and machine learning pipeline diagram, were introduced to design the detailed 
+diagrams. These drawings showed system workflow, component interaction, object structure 
+and data transformation processes.The algorithm design part formally outlined the hybrid 
+forecasting model which was the combination of XGBoost to predict revenue and linear trend 
+to predict inventory. This design is accurate, can be inter preted, has modularity and scaleable 
+and yet can be deployed by SME.In general, the system design offers a solid implementation 
+basis and helps to meet the research goals of the accurate, explainable, and business -oriented 
+sales forecasting.  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                         CHAPTER 07: Implementation  
+20222296                                                        68  
+Chapter 7: Implementation  
+7.1 Chapter Overview  
+ 
+This chapter describes the implementation of the proposed SalesSense forecasting system, 
+translating the design and algorithmic structures presented in Chapter 6 into a functional 
+prototype. The implementation phase focused on developing modular components  for data 
+preprocessing, feature engineering, XGBoost -based revenue forecasting, inventory 
+recommendation logic, and SHAP -based explainability. Following the layered architecture 
+defined earlier, each module was developed and integrated to ensure accuracy,  
+maintainability, and usability. This chapter outlines the technologies used and explains how 
+the system design was transformed into a working machine learning application.  
+7.2 Technology Selection  
+This section justifies the selection of tools, frameworks, and programming languages used for 
+the development of the prototype and the AI/ML model. The choices were made to ensure 
+high performance, scalability, and ease of integration between the machine l earning backend 
+and the interactive frontend.  
+7.2.1  Technology Stack  
+ 
+The following figure visualizes the technology stack, separated into the Frontend (User 
+Interface), Backend (API & Processing), and Data/ML Layer.  
+    Figure 12 : Technology Stack  
+
+ML-Based Sales Forecasting for Retail Spices                         CHAPTER 07: Implementation  
+20222296                                                        69 7.2.2  Programming Languages  
+ 
+Python:  Selected as the primary language for the backend and machine learning components.  
+Python is the industry standard for Data Science and AI due to its extensive ecosystem of 
+libraries (Pandas, Scikit -learn). Its simplicity allows for rapid prototyping of complex 
+algorithmic logic.  
+JavaScript (ES6+):  Used for the frontend development.  
+JavaScript is the native language of the web, enabling dynamic, client -side interactivity 
+essential for a responsive dashboard.  
+CSS3:  Used for styling the user interface.  
+Modern CSS variables and Flexbox/Grid layouts were used to create a custom 
+"Glassmorphism" aesthetic without the overhead of heavy UI frameworks.  
+ 
+7.2.3  Development Framework  
+ 
+FastAPI (Backend):  A modern, high -performance web framework for building APIs with 
+Python.  
+Chosen over Flask or Django for its speed (Starlette -based) and automatic validation using 
+Python type hints. It natively supports asynchronous processing, which is beneficial for 
+handling ML inference requests concurrently.  
+React.js (Frontend):  A component -based JavaScript library for building user interfaces.  
+React's Virtual DOM ensures efficient rendering of dynamic charts and data tables. Its 
+component -based architecture makes the code modular and reusable (e.g., reusing the same 
+Chart component for different metrics).  
+7.2.4  Libraries/ Toolkits  
+ 
+1. XGBoost: The core machine learning library for regression forecasting.  
+• Justification: XGBoost (Extreme Gradient Boosting) was selected for its superior 
+performance on structured/tabular data compared to Deep Neural Networks, 
+which often require more data than is available in this context. It handles missing 
+values and non -linear relationships effectively.  
+2. SHAP (SHapley Additive exPlanations): used for model interpretability.  
+• Justification: Crucial for trust. It allows the system to explain why a forecast was 
+made, moving beyond "black box" predictions.  
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                         CHAPTER 07: Implementation  
+20222296                                                        70 3. Pandas & NumPy: Used for data manipulation and numerical analysis.  
+• Justification: Essential for the ETL (Extract, Transform, Load) process to clean 
+raw Excel files and structure them for the model.  
+ 
+7.2.5  Integrated Development Environment (IDEs)  
+Visual Studio Code (VS Code) : The primary IDE used for full -stack development.  
+Justification: VS Code offers excellent support for both Python and JavaScript ecosystems 
+via extensions. Features like the integrated terminal, IntelliSense (code completion), and 
+debugging tools streamlined the development workflow across both frontend a nd backend.  
+ 
+7.2.6  Summary of the Technology Selection  
+The technology selection prioritizes performance  and maintainability . Python and 
+XGBoost provide a robust engine for accurate forecasting, while FastAPI ensures these 
+insights are served with low latency. On the client side, React and Chart.js deliver a seamless, 
+app-like experience. This decoupled architecture (separate F rontend and Backend) allows for 
+independent scaling and maintenance of the user interface and the predictive core.  
+7.3 Core Functionalities Implementation  
+This section details how the core features of the SalesSense  system were developed, covering 
+data analysis, modular implementation, and system integration.  
+ 
+7.3.1 Exploratory Data Analysis (EDA)  
+➢ Before training the model, an exploratory analysis was conducted on the dataset 
+(generated from files/*.xlsx and april.csv) to understand sales distribution and identify 
+data quality issues.  
+➢ Dataset Declaration: The system utilizes a proprietary dataset of monthly sales 
+records from a retail spices sales shop . 
+➢ Dataset Size and Time Range:The dataset consists of 43 usable monthly records 
+covering the period from April 2022 to January 2026. The first three months were 
+excluded during preprocessing due to insufficient lag values required for feature 
+engineering.  
+➢ Data Split:Training Data ( 40 Months ): Used to teach the XGBoost model the 
+relationship between time (Month) and Revenue.  
+➢ Testing Data ( 3 Months ): Used to validate the model's accuracy on unseen future 
+months.  
+➢ Features Used:The final model was trained using the following features: MonthNum, 
+MonthOfYear, Lag1, Lag2, Lag3, RollingMean3, and RollingStd3. These features 
+were specifically engineered to capture temporal dependencies and seasonal patterns 
+in sales data . 
+ML-Based Sales Forecasting for Retail Spices                         CHAPTER 07: Implementation  
+20222296                                                        71 ➢ Feature Engineering:  
+To improve predictive performance, several time -series -based features were generated 
+from the original dataset. Lag features (Lag1, Lag2, Lag3) were created to capture 
+short -term dependencies between consecutive months. Rolling statistics such as 
+RollingMe an3 and RollingStd3 were introduced to represent local trends and 
+variability in sales. Additionally, MonthNum and MonthOfYear were included to 
+capture seasonality effects. These engineered features enable the model to better learn 
+non-linear patterns in the data.  
+ 
+7.3.2 Modular Development  
+The system is built using a modular architecture, ensuring that data processing, training, and 
+inference are loosely coupled.  
+A. Data Preprocessing Module (data_processor.py)  
+This module handles the "Extract, Transform, Load" (ETL) process. It reads raw, 
+unstructured Excel files and converts them into a clean CSV format.  
+Key Implementation: The process_dataframe function scans for the "Particulars" row to 
+identify the start of the data table, handling dynamic header positions found in manual 
+manual bookkeeping files.  
+ 
+ 
+ 
+ 
+ 
+ 
+
+ML-Based Sales Forecasting for Retail Spices                         CHAPTER 07: Implementation  
+20222296                                                        72 B. Prediction Engine (main.py)  
+This module wraps the XGBoost model within a FastAPI  endpoint. It trains the model on -
+the-fly when a request is received, ensuring the forecast always reflects the latest data.  
+➢ Model Training Process:The dataset was split into training and testing sets, where 
+approximately 80% of the data (40 months) was used for training and the remaining 
+20% (3 months) was used for testing. The XGBoost regressor was trained on the 
+training data set using the engineered features, and predictions were generated for the 
+test period as well as future months.  
+➢ Key Implementation: The /api/forecast endpoint prepares the data, trains the 
+XGBRegressor, and generates future indices for prediction.  
+➢ Model Optimization:Basic hyperparameter tuning was applied to improve model 
+performance and reduce overfitting. Parameters such as learning rate, number of 
+estimators, and maximum tree depth were adjusted. A lower learning rate was used to 
+ensure gradual l earning, while limiting tree depth helped prevent the model from 
+capturing noise in the small dataset. These adjustments improved generalization on 
+unseen data.  
+➢ Model Evaluation Metrics:The performance of the model was evaluated using 
+standard regression metrics, including Root Mean Squared Error (RMSE), Mean 
+Absolute Error (MAE), Mean Absolute Percentage Error (MAPE), and R -squared 
+(R²). These metrics provide ins ights into prediction accuracy and model reliability. 
+Detailed evaluation results are presented in Chapter 8.  
+➢ Model Explainability using SHAP:To enhance transparency, SHAP (SHapley 
+Additive Explanations) was integrated into the system to interpret model predictions. 
+SHAP values quantify the contribution of each feature toward the final prediction, 
+allowing users t o understand which factors influence sales forecasts. This improves 
+trust in the model and supports better decision -making for non -technical users.  
+ 
+ 
+
+ML-Based Sales Forecasting for Retail Spices                         CHAPTER 07: Implementation  
+20222296                                                        73  
+ 
+C. Inventory Logic Module  
+Integrated within the forecasting endpoint, this logic calculates the "Rate of Sale" for top 
+products to predict next month's demand.  
+ 
+ 
+ 
+ 
+ 
+
+ML-Based Sales Forecasting for Retail Spices                         CHAPTER 07: Implementation  
+20222296                                                        74  
+7.3.3 Code Structure & Organization  
+The codebase follows a clear separation of concerns pattern:  
+1.backend/: Contains all business logic and ML algorithms.  
+2.main.py: The Controller, handling API requests.  
+3.data_processor.py: The Service, handling data logic.  
+4.frontend/: Contains the presentation layer.  
+5.src/App.jsx: The View, responsible for rendering charts and managing state.  
+6.Design Pattern: The backend implements a Service -Controller pattern (implicitly), where  
+7.Data_processor.py acts as the service layer providing clean data to the main.py  controller. 
+The frontend uses the Component -Based pattern inherent to React.  
+ 
+ 
+7.3.4 Integration  
+Integration between the Frontend and Backend is achieved via RESTful APIs.  
+1.Request: The React frontend uses axios to send an HTTP GET request to 
+http://localhost:8000/api/forecast.  
+2.Processing: FastAPI receives the request, triggers the training pipeline in  
+main.py, and generates the JSON response.  
+3.Response: The JSON data (containing predictions and SHAP values) is sent back to the 
+frontend.  
+4.Rendering: React updates the state (setForecast), causing the react -chartjs -2 components to 
+re-render with the new data.  
+This seamless integration allows the complex ML operations to occur invisibly to the user, 
+who simply sees the dashboard update in real -time.  
+ 
+ 
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                         CHAPTER 07: Implementation  
+20222296                                                        75 7.4 User Interface Implementation  
+This section describes the implementation of the user interface (UI) of the SalesSense  system 
+and its integration with backend forecasting modules. The UI was developed as a simple 
+dashboard -based interface to enable retail stakeholders to generate forecasts, view model 
+performance, and interpret results without requiring technical knowledg e. 
+The user interface was implemented as a structured dashboard that integrates revenue 
+forecasting, model evaluation, inventory recommendations, and explainability into a unified 
+decision -support platform. The frontend includes a forecast trigger button, a s ix-month 
+revenue summary panel, historical vs predicted line chart visualizations, model performance 
+metrics (MAE, RMSE, MAPE), and a SHAP -based feature importance section to enhance 
+transparency. The frontend communicates with backend modules through stru ctured function 
+calls, where the trained XGBoost model is loaded, preprocessing and feature engineering are 
+applied, forecasts are generated, inventory recommendations are computed, and 
+explainability outputs are produced before returning results to the UI . Model serialization 
+ensures efficient runtime execution without retraining. Usability and accessibility were 
+prioritized through clear layout design, readable fonts, high contrast, minimal technical 
+terminology, and avoidance of color -only visual cues, e nsuring the system remains 
+understandable and accessible for SME stakeholders.  
+ 
+ 
+ 
+    Figure 13: UI Implementation  
+
+ML-Based Sales Forecasting for Retail Spices                         CHAPTER 07: Implementation  
+20222296                                                        76 7.5 Challenges and Solutions  
+This section is emphasized to show the technical challenges experienced in the process of 
+creating SalesSense and the engineering solutions that were adopted to address them.  
+ 
+7.5.1 Quality of Data and Inconsistency.  
+Challenge: Unstructured nature of the legacy data was the major challenge. All the source 
+files were the manually created Excel books of books (files/*/.xlsx) that were not made by 
+machines.  
+Problems: Combined rows, disparate date headers (e.g. one row says For April 2024 and 
+another April -24), and the rows with Particulars showing up with varying indices.  
+Impact: Standard library functions (such as pd.read_excel) were not able to read the tables, 
+and empty or misaligned datasets were obtained.  
+Solution: We adopted a home made Robust ETL Parser in data_processor.py  
+Dynamic Header Detection: The script does not predetermine the row number on which it 
+will look at the headers but scans the first 50 rows to find the keyword Particulars.  
+Regex Cleaning: A clean_value Regular Expression (re.search(r"([ \d.]+), s)) is a function 
+created to take a numerical value of a string such as 10 kgs or 1,200.00 and is capable of 
+overcoming the error of human formatting.  
+ 
+7.5.2 Overfitting of Model to Small Dataset.  
+Difficulty: The dataset used was monthly data in a limited number of years. Deep Learning 
+models (such as LSTMs) generally need thousands of observations to be generalized.  
+Impact: Early work with complex neural networks achieved poor performance as the model 
+overfitted, that is, it remembered the training data but could not make accurate predictions of 
+future trends.  
+Rationale: XGBoost (Extreme Gradient Boosting) was chosen over Deep Neural Network.  
+Why: XGBoost is an ensemble algorithm (a decision -tree) which works remarkably well with 
+a small, structured tabular data.  
+Regularization: To ensure that the model does not get too complicated, tuned 
+hyperparameters (learning rate 0.05, max depth=3) so that the model only learns the overall 
+trend and not noise.  
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                         CHAPTER 07: Implementation  
+20222296                                                        77 7.5.3 Frontend Backend Integration Latency.  
+Issue: On -the-fly model training when loading the dashboard would create a discernible 
+latency (delay) within the User Interface.  
+Impact: It took 1 -2 seconds before the backend responded to the data and trained the model 
+because it seemed that the dashboard was frozen.  
+Solution: We used Asynchronous State Management in the React Frontend 
+(<|human|>Solution: We had used Asynchronous State Management in the React Frontend (  
+App.jsx) and FastAPI Backend.  
+States Loading: The frontend now shows a visual loading Analytics Suite... indicator during 
+the process of getting data.  
+Async/Await: The integration is based on the pattern of parallel fetching the Summary and 
+Forecast data with axios.all which implements the concept of an async/await pattern in the 
+JavaScript language and shortens the overall wait time by about 40.  
+ 
+7.6 Chapter Summary  
+The chapter introduced the use of SalesSense forecasting system, which showed how the 
+design architecture was converted to a working prototype. The system was built on Python 
+and data science ecosystem, i.e., Pandas, XGBoost, Scikit -learn, SHAP, and visual ization 
+libraries. Data preprocessing, feature engineering, revenue forecasting, inventory 
+recommendation and explainability, are core modules and were implemented modularly and 
+integrated using a method of structured layer based approach. The main issues,  such as data 
+inconsistency, model tuning, small dataset size, and module integration were tackled by 
+systematic debugging, feature engineering, hyperparameter optimization, and model 
+serialization. The main functionalities are already implemented and inte grated, so the system 
+is currently ready to be validated and performance tested during the testing phase  
+ML-Based Sales Forecasting for Retail Spices                                       CHAPTER 08: Testing  
+20222296                                                        78 Chapter 8 : Testing  
+8.1  Chapter Overview  
+This chapter comprises an in -depth analysis and validation of SalesSense system. In order to 
+make sure that the solution is appropriate to the issues of sales forecasting of the small scale 
+retail, a strict testing framework was used, divided into two main  aspects are Quantitative 
+Evaluation and Qualitative Evaluation.The Quantitative phase is concerned with the technical 
+validation of the Machine Learning models in question, to measure the predictive accuracy of 
+the XGBoost and other algorithms on the basi s of conventional statistical indicators. This 
+makes the model reliable enough to the financial and inventory planning requirements. 
+Qualitative stage will test the functional soundness of the system and the user experience 
+whereby the software prototype i s checked with the requirements of the stakeholders. 
+Through this systematic testing method, the project will exhibit not only the technical 
+strength but also the feasibility of the project within the real world business context.  
+ 
+8.2 Testing Criteria  
+The main aim of testing stage is to strictly test the SalesSense system and find out how it can 
+fulfill the technical requirements and business expectations. The particular aims of such testing 
+process are as follows:  
+• To Measure Accuracy of Prediction: To determine how accurate the machine learning 
+models are in predicting sales of spice shop. This is done by examining the proximity 
+between the forecasted values against past sales data using statistics.  
+• To Conduct Model Benchmarking: To conduct a comparative study of several 
+algorithms, i.e., XGBoost, Random Forest, Linear Regression and LSTM, in order to 
+determine which model is most robust to work with small -scale seasonal retail data.  
+• To Check System Functionality: To make sure that the end -to-end interaction between 
+the FastAPI backend and the React  frontend is functional, in particular, to check the 
+data processing, model triggering, and results visualization.  
+• To Assess System Performance and Usability: To test whether the system will respond 
+within reasonable time limits and whether the user interface can be used by non -
+technical stakeholders, i.e. shop managers.  
+• To Authenticate Business Intelligence Results: To assure the results of the derived 
+insights, including forecasting the profits, inventory needs, and analysis of cash flows, 
+are obtained in the proper manner of calculation in accordance with the volume of sales 
+forecasted, and availing an actionable information to make the decision.  
+ 
+ 
+ 
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                                       CHAPTER 08: Testing  
+20222296                                                        79 8.3 Model Testing  
+We tested the machine learning model to see if it could accurately predict future monthly 
+sales values based on past data. Because this is a regression problem, we used the right 
+regression -based evaluation metrics to figure out how accurate the prediction s were.The 
+model uses time -series data like past sales (lag values), seasonal indicators, and rolling 
+statistics to predict the total sales for the next month.  
+Evaluation Metrics  
+1.Mean Absolute Error (MAE)  
+MAE measures the average absolute difference between actual and predicted values.  
+2.Root Mean Square Error (RMSE)  
+RMSE measures the square root of the average squared differences between predicted 
+and actual values. It penalizes larger errors more heavily.  
+3.Mean Absolute Percentage Error (MAPE)  
+MAPE represents the prediction error as a percentage.  
+4.R-squared (R² Score)  
+R² indicates how well the model explains the variance in the data.  
+ 
+Experiment Setup  
+The model was trained using 4 3 months of historical sales data(2022 April  – 2025 October ) 
+and tested on 3 months (November 2025, December 2025, and January 2026). A time -based 
+split was used to preserve the sequential nature of the data.  
+ 
+Experimental Results (Final Model – XGBoost)  
+ 
+Metric  Value  
+RMSE  714,087  
+MAE  691,651  
+MAPE  12.3%  
+R² Score  0.2426  
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                                       CHAPTER 08: Testing  
+20222296                                                        80 The results indicate that the XGBoost model achieves a reasonable level of prediction 
+accuracy. The MAPE value of 12.3% suggests that the model’s predictions deviate by 
+approximately 12% from actual sales values on average.  
+ 
+Figure 14.: Actual vs Predicted Sales using XGBoost Model  
+The figure above shows the difference between the actual and predicted sales values for the 
+test period. The model does a good job of showing the overall trend in sales, but there are 
+some differences between the predicted and actual values. These differen ces are to be 
+expected because the dataset is small and there are no outside factors like promotions or 
+market conditions. But the model does show a fair amount of accuracy and trend alignment.  
+ 
+8.4 Benchmarking  
+ 
+Model  RMSE  MAE  MAPE  R² 
+XGBoost  714,087  691,651  12.3%  0.2426  
+Random Forest  721,883  718,234  13.2%  0.2260  
+Linear Regression  720,597  712,202  13.1%  0.2287  
+LSTM  5,584,060  5,523,448  100.0%  -45.3162  
+Table 16: Benchmarking Table  
+The benchmarking results indicate that the XGBoost model achieved the best overall 
+performance among the evaluated models. It recorded the lowest RMSE, MAE, and MAPE 
+values, demonstrating higher prediction accuracy compared to the other models. The results 
+from Random Forest and Linear Regression were pretty similar, but their error metrics were a 
+little higher than those from XGBoost, which means they didn't do as well. These models could 
+find general patterns, but they weren't as good at reduci ng predictio n error.The LSTM model 
+
+ML-Based Sales Forecasting for Retail Spices                                       CHAPTER 08: Testing  
+20222296                                                        81 did a lot worse, with very high error values and a negative R² score. This is mostly because the 
+dataset is small, and deep learning models usually need bigger datasets to work well.  
+The selection process also took into account how easy it was to understand the model, in 
+addition to how accurate it was. We chose XGBoost because it works well with SHAP(SHapley 
+Additive Explanations), which makes it easy to explain how features affect pr edictions. This 
+makes things more open and helps users make better choices. Overall, XGBoost was selected 
+as the final model due to its superior accuracy, robustness on small datasets, and strong 
+explainability through SHAP.  
+ 
+8.5 Functional Testing  
+Functional testing was conducted to verify that all core features of the SalesSense system 
+operate according to the defined functional requirements. The testing was performed on the 
+developed prototype by executing predefined test cases derived from system  functionalities 
+such as data upload, processing, forecasting, and dashboard outputs.  
+ 
+Test 
+Case 
+ID Feature / 
+Component  Description  Expected 
+Result  Actual Result  Status  
+TC01  File Upload  Uploading the raw 
+Excel/CSV 
+transaction records 
+to the system.  System 
+accepts file 
+and saves it to 
+the temporary 
+directory.  File uploaded 
+successfully to the 
+backend.  Pass  
+TC02  Data 
+Processing  Triggering the 
+data_processor.py 
+to clean and 
+structure raw data.  System 
+handles 
+missing values 
+and 
+standardizes 
+date formats.  Cleaned dataset 
+(cleaned_all.csv) 
+generated 
+correctly.  Pass  
+TC03  Sales Data 
+API Fetching historical 
+processed data via 
+the /sales endpoint.  API returns a 
+valid JSON 
+response 
+containing past 
+sales records.  Correct historical 
+data retrieved in 
+JSON format.  Pass  
+ML-Based Sales Forecasting for Retail Spices                                       CHAPTER 08: Testing  
+20222296                                                        82 Test 
+Case 
+ID Feature / 
+Component  Description  Expected 
+Result  Actual Result  Status  
+TC04  Forecast 
+API Requesting a 6 -
+month prediction 
+using the XGBoost 
+model.  API returns 
+future sales 
+values based 
+on the trained 
+model.  6-month forecast 
+generated and 
+returned 
+successfully.  Pass  
+TC05  Business 
+Summary  Generating the 
+dashboard overview 
+(Profit, Revenue, 
+Trends).  Dashboard 
+displays 
+calculated 
+metrics based 
+on forecast.  Correct financial 
+summary 
+displayed on the 
+UI. Pass  
+TC06  Product 
+Analytics  Identifying the 
+highest -performing 
+spice products.  System lists 
+top products 
+by quantity 
+and value.  Correct top -
+product rankings 
+displayed.  Pass  
+Table 17 :Functional Testing  
+Test Results  
+All functional test cases were executed successfully, and the system produced the expected 
+outputs in all the scenarios.  
+Pass Rate Calculation  
+Total Test Cases = 6  
+Passed = 6  
+Failed = 0  
+Pass Rate = (Passed / Total) × 100  
+➢ Pass Rate = (6 / 6) × 100 = 100%  
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                                       CHAPTER 08: Testing  
+20222296                                                        83 8.6  Non - Functional Testing  
+Functional testing was conducted in alignment with the system requirements defined in 
+Chapter 4 (SRS).  The testing focused on verifying core functionalities of the SalesSense 
+system, including data upload, data processing, forecast generation, and dashboard outputs. 
+Each function was tested using predefined test cases to ensure that the system produces 
+correct and expected results.  
+ 
+8.7   Limitations of the testing process  
+There were a number of limitations in the testing process. The major weakness is the very 
+limited dataset that was used to train and evaluate the model and only 43 months of historical 
+data were involved. This limits the learning capabilities of the model to complex patterns and 
+can influence the accuracy of prediction. Moreover, the lack of empirical expenditure and 
+cost information restricted the analysis of the output in terms of finance like the estimation of 
+profits and cash flow analysis. Moreover, th e dataset did not include other external variables 
+like promotions, market trends, and seasonal events, which can affect the accuracy of the 
+predictions. Notwithstanding these constraints, the testing process offers reasonable idea 
+about the performance of  the system in the constraints given.  
+ 
+8.8   Chapter Summary  
+The chapter described the process of testing and validation of the SalesSense system in the 
+quantitative and qualitative methods. The machine learning model has been tested with 
+conventional regression measurements and benchmarking has been done to ensure that the 
+XGBoost has been chosen as the most appropriate model. Non -functional testing revealed that 
+the system features are functioning as expected, functional testing confirmed that the system 
+functions as expected, and its performance, accuracy, and usa bility were acceptable. The 
+general findings, even though they have certain limitations caused by the limited data set and 
+cost data, suggest that the system is trustworthy and can be utilized in a real -life context in 
+retail forecasting.  
+ 
+ 
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 09: Critical Evaluation  
+20222296                                                        84 Chapter 9 : Critical Evaluation  
+ 
+9.1   Chapter Overview  
+In this chapter, the critical analysis of SalesSense  system is provided which is based on the 
+evaluation of its efficiency, usability, and real practical use within a real life retail situation. 
+The analysis is based on a qualitative and quantitative integration, which consists of analysis 
+of the performanc e of the system and user feedback. The objective is to establish the extent to 
+which the system addresses its purposes and aids decision -making to the retail clients.  
+ 
+9.2   Evaluation Methodology and Approach  
+The critical evaluation stage is to evaluate the general effectiveness and applicability of 
+developed system in addition to technical implementation. Although the testing phase was 
+aimed at testing the functionality of the system and determining the accura cy of the model, 
+this phase determines the usefulness and reliability of the system to the user and the business.  
+The assessment was done through a qualitative method where the factor that was evaluated 
+was the interaction of the user with the system, ease of use of the interface, effectiveness of 
+the output, and usefulness of the produced predictions. The system was evaluated in the 
+extent that it assists in making major business decisions including sales forecasting, inventory 
+planning, and financial estimation.  
+Further on, quantitative outcomes of model performance measures were also included to 
+facilitate the review so that both the accuracy and usability factors are put into consideration. 
+This integrated method is a comprehensive analysis of the system in term s of its practical 
+value.  
+ 
+9.3   Evaluation Criteria  
+The evaluation of the SalesSense system was conducted based on the following key criteria:  
+1. Accuracy  – The ability of the model to predict future sales values with acceptable 
+error margins measured by using metrics such as RMSE, MAE, and MAPE.  
+2. Usability  – how easy it is to use the system interface, how clear the visualisations are, 
+and how easy it is for people who aren't tech -savvy, like shop owners, to use.   
+3. Technical Robustness  – The reliability, performance, and scalability of the system, 
+including API responsiveness and data processing efficiency.  
+4. Business Value  – How useful the system is for helping people make decisions, 
+especially when it comes to predicting sales, planning inventory, and estimating costs.  
+ 
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 09: Critical Evaluation  
+20222296                                                        85 9.4   Self-Evaluation  
+Strengths  
+1. Effective Model Selection – XGBoost had the best performance (MAPE: 12.3%), 
+showing that it can handle small time -series datasets very well.  
+2. End-to-End System Integration – The system uses FastAPI  and React to combine data 
+processing, prediction, and visualisation into a single workflow.  
+3. Explainability (SHAP Integration) – Adding SHAP makes things clearer by showing 
+how features affect predictions.  
+4. User -Friendly Interface – The dashboard is easy to understand,  making it accessible 
+for non -technical users.  
+Weaknesses  
+1. Limited Dataset – The model was trained on only 43 months of data, which makes it 
+harder for it to learn complicated  
+2. Lack of Cost/Expenditure Data – Financial results like profit are based on guesses, not 
+real data  
+3. Exclusion of External Factors – Variables such as promotions, holidays, and market 
+trends were not included, affecting prediction accuracy.  
+4. Scalability Constraints – The current system works best with small datasets, so it may 
+need to be improved for larger deployments.  
+ 
+9.5   Selection of the Evaluators  
+ 
+Domain Experts   
+• Profile: Retail shop owners/business  users  
+• Rationale: Provide insights on the practicality, usability, and business significance  of 
+the system  
+Technical Experts   
+• Profile: Developers, data science or IT background individuals  
+• Rationale: Evaluate system architecture, implementation quality and model 
+performance  
+Focus Group   
+• Profile: General users interacting with the system (e.g., staff or students)  
+• Rationale: user experience, interface clarity, and usability  
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 09: Critical Evaluation  
+20222296                                                        86 9.6   Evaluation Results  
+ 
+9.6.1  Expert Opinion   
+9.6.1.1 Domain Experts  
+Concept  
+• The system was considered useful for improving decision -making in small retail 
+businesses  
+• The focus on sales forecasting and inventory planning was seen as practical and 
+relevant  
+Solution  
+• The forecasting results were considered reasonably accurate and useful for planning  
+• Suggested inclusion of additional features such as expense tracking for better 
+financial insights  
+ 
+9.6.1.2  Technical Experts  
+Scope  
+• The system was recognized as a complete end -to-end solution combining ML and 
+web technologies  
+• Suggested extending the system with more advanced forecasting models or additional 
+datasets  
+Architecture of the Solution  
+• The FastAPI and React -based architecture was considered lightweight and efficient  
+• Recommendation to improve scalability for handling larger datasets  
+Implementation of the Solution  
+• The implementation was considered clean and modular  
+• Suggested improvements such as deployment optimization and enhanced security 
+mechanisms  
+ 
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 09: Critical Evaluation  
+20222296                                                        87 9.6.2 Focus Group Testing  
+Prototype Features  
+• Most users found the forecasting and summary features useful for understanding sales 
+trends  
+• Suggested adding more customization options for reports and outputs  
+Usability  
+• The majority of users found the interface easy to use and understand  
+• Some users suggested improving visual clarity and adding more guidance for first -
+time users  
+ 
+9.7 Limitations of Evaluation  
+There were a number of limitations with the evaluation process. The most obvious weakness 
+is the limited size of the dataset that is utilized in the testing and it might influence the 
+credibility of the evaluation findings. Also, there was no actual cost a nd expenditure data, 
+which restricted the possibility of completely assessing such financial outputs as profit and 
+cash flow. It was also evaluated on a small number of users which might not be a complete 
+picture of what would happen in the real life in va rious business contexts. Also, the external 
+factors which can affect the overall effectiveness of the system like promotions, seasonal 
+events, and market conditions were not taken into consideration during the evaluation 
+process. In spite of these shortcom ings, the evaluation gives a fair evaluation of the 
+performance of the system in practice.  
+ 
+9.8 Functional and Non -Functional Requirements Implementation  
+The SalesSense system developed is able to utilise the functional and non -functional 
+requirements as presented in Chapter 4 . All the key functional requirements, such as data 
+upload, data processing, sales forecasting, and dashboard visualization were implemented and 
+tested in terms of functionality.  
+Regarding the non -functional requirements, the system performs reasonably well in the sense 
+that it can make predictions in a short period, and it has a fair degree of accuracy based on 
+MAPE of 12.3%. It is also user friendly because the system can be used  by non technical and 
+can also be scaled up to small to medium datasets. Also, interpretability is ensured by the 
+incorporation of SHAP, which allows explaining model predictions in a transparent way.  
+In general, the system satisfies most of the outlined requirements, but it has certain 
+drawbacks in such aspects as large -data scalability and access to financial data.  
+ 
+ML-Based Sales Forecasting for Retail Spices                    CHAPTER 09: Critical Evaluation  
+20222296                                                        88 9.9 Chapter Summary  
+The SalesSense system developed is able to utilise the functional and non -functional 
+requirements as presented in Chapter 4. All the key functional requirements, such as data 
+upload, data processing, sales forecasting, and dashboard visualization were impl emented and 
+tested in terms of functionality. Regarding the non -functional requirements, the system 
+performs reasonably well in the sense that it can make predictions in a short period, and it has 
+a fair degree of accuracy based on MAPE of 12.3%. It is als o user friendly because the 
+system can be used by non technical and can also be scaled up to small to medium datasets. 
+Also, interpretability is ensured by the incorporation of SHAP, which allows explaining 
+model predictions in a transparent way. In genera l, the system satisfies most of the outlined 
+requirements, but it has certain drawbacks in such aspects as large -data scalability and access 
+to financial data. 
+ML-Based Sales Forecasting for Retail Spices                                 CHAPTER 10: Conclusion  
+20222296                                                        89 Chapter 10 : Conclusion  
+10.1 Chapter Overview  
+This chapter is the conclusion of the SalesSense project which summarizes the main findings, 
+achievements and the results of the research. It will determine the extent of accomplishment 
+of the research aims and objectives as well as reflect the knowledge a nd skills utilized in the 
+project. The usefulness of the system to retail forecasting and decision -making is also 
+highlighted in the chapter.  
+ 
+10.2 Achievements of Research Aims & Objectives   
+Objective  Description  Status  Remarks  
+Obj 1  Analyze challenges in retail 
+sales forecasting  Achieved  Literature review and problem 
+analysis clearly identified 
+forecasting issues  
+Obj 2  Design a machine learning -
+based forecasting model  Achieved  XGBoost model designed using 
+time-series features  
+Obj 3  Develop a working system 
+with user interface  Achieved  Full system implemented using 
+FastAPI and React  
+Obj 4  Evaluate model performance 
+and compare models  Achieved  Multiple models tested and 
+benchmarked  
+Obj 5  Provide decision -support 
+features (inventory & financial 
+insights)  Partially 
+Achieved  Sales forecasting achieved; 
+financial estimation limited due to 
+lack of cost data  
+Table 18:Achivements of Research Aims & Objective 1 
+The goals of the research outlined in Chapter 1 were, in large part, accomplished with the aid 
+of successful development and testing of SalesSense system. The project was particularly 
+successful in revealing the main issues in retail forecasting and resolv ing them through the 
+introduction of a machine learning -based solution. XGBoost model was chosen because it 
+was the most appropriate model after being compared with other models and showed 
+reasonable prediction accuracy. The system was built successfully a nd has the built -in 
+frontend and a back -end functionality that includes processing, forecasting, and visualizing 
+data. Although the system met its most essential goals, some of the features like financial 
+analysis were partially restricted because of the l ack of real expenditure data. All in all, the 
+project can achieve its major objective of informing decisions in a retail setting using data.  
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                                 CHAPTER 10: Conclusion  
+20222296                                                        90 10.3 Utilization of Knowledge from the Course  
+The process of building SalesSense system demanded the use of knowledge acquired during 
+the course of Computer Science degree. The ideas of machine learning were used in the 
+model selection, training, and evaluation, especially in the learning of the regre ssion methods 
+and performance measures. System design, architecture and implementation of full -stack 
+application on Fast API and React relied on knowledge of software engineering principles.  
+Besides, data processing and analysis expertise were used to clean and transform raw data 
+into a structured form able to be used in training the models. The principles of APIs, 
+frontend, and user interface development were used to develop a user -friendly a nd interactive 
+system. The addition of SHAP to help interpret model is yet another manifestation of higher -
+order machine learning concepts that is not taught in the main curriculum.  
+ 
+10.4 Use of Existing Skills   
+The development of SalesSense system used some of the fundamental ideas acquired in the 
+course of the degree. The backend development and machine learning implementation were 
+done with knowledge about programming in Python. The concepts of database and dat a 
+handling were used in the preprocessing of the data and feature engineering. The system was 
+designed with the help of FastAPI and using the principles of software engineering including 
+modular design and API development.  
+Furthermore, the knowledge of frontend development was used through React to create a user 
+interface that is interactive. The forecasting model was developed and assessed with the help 
+of concepts of statistics and machine learning, such as regression anal ysis and evaluation 
+metrics (RMSE, MAE, MAPE). On the whole, the project was successfully used to apply 
+available academic knowledge to practice.  
+ 
+10.5 Use of New Skills   
+The development of SalesSense  system used some of the fundamental ideas acquired in the 
+course of the degree. The backend development and machine learning implementation were 
+done with knowledge about programming in Python. The concepts of database and data 
+handling were used in the p reprocessing of the data and feature engineering. The system was 
+designed with the help of FastAPI and using the principles of software engineering including 
+modular design and API development.  
+Furthermore, the knowledge of frontend development was used through React to create a user 
+interface that is interactive. The forecasting model was developed and assessed with the help 
+of concepts of statistics and machine learning, such as regression anal ysis and evaluation 
+metrics (RMSE, MAE, MAPE). On the whole, the project was successfully used to apply 
+available academic knowledge to practice.  
+ 
+ML-Based Sales Forecasting for Retail Spices                                 CHAPTER 10: Conclusion  
+20222296                                                        91 10.6 Achievement of Learning Outcomes  
+This project enabled the learning outcomes of the module to be accomplished. The project 
+proves that it is capable of designing, developing, and testing a fully -implemented software 
+solution that incorporates machine learning methods. It also demonstrates the ability to use 
+theoretical information in solving a practical issue in the retail sector.  
+In addition, the project demonstrates the knowledge of research, analysis, and critical 
+assessment, which is manifested in the model comparison, testing, and system evaluation. 
+Both technical and analytical learning outcomes are achieved through the creati on of an end -
+to-end system, as well as integration of explainable AI methods like SHAP. All in all, the 
+project meets the anticipated standards of the module, and it possesses a high degree of 
+practical and academic competency.  
+ 
+10.7 Problems and Challenges Faced   
+When developing SalesSense system, a number of issues were encountered. The size of the 
+dataset used was a major problem since it affected the precision of some of the models such 
+as LSTM. This was defeated by the selection of XGBoost that is more efficien t with small 
+structured data. The other challenge was the lack of expenditure and cost data that limited the 
+financial analysis, this was handled through mere assumptions of making profits estimates.  
+Moreover, machine learning models were not exactly direct upwards to fit into a full -stack 
+system, and the communication between FastApi and react frontend had to be evaluated. It 
+was addressed by developing a modular design and operating endpoints indepen dently. The 
+research and practice on more advanced concepts such as XGBoost and SHAP were also 
+extra efforts which were rewarded by research and experience.  
+ 
+10.8 Deviations   
+The original plan was deviated in a number of ways during the project. The frontend was 
+originally going to be developed with Angular but React was chosen over it as more flexible 
+and easier to integrate with the backend. Also more complicated models like LSTM were 
+investigated but were subsequently demoted because of low results on the small dataset.  
+Moreover, the financial analysis element was made easier since there was no actual cost 
+information. Such deviations were required to make sure that the development of a stable, 
+functional, and practical system would take place within the specified limitat ions.  
+ 
+ 
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                                 CHAPTER 10: Conclusion  
+20222296                                                        92 10.9 Limitations of the Research   
+The study is limited in a number of ways. The first weakness is that the data is small and the 
+model may not be able to generalize and find complex patterns. Moreover, it is not complete 
+as there are no external factors like promotions, holidays, and marke t conditions to help in 
+forecasting. The other weakness is that there is no actual expenditure and therefore it impacts 
+the validity of financial related outputs like profit estimation and cash flow estimation. 
+Moreover, only a small number of users were e valuated, which can not be entirely applicable 
+to a real -life situation. These constraints are in line with the constraints that were discovered 
+in the course of testing.  
+ 
+10.10  Future Enhancements  
+The system could be also enhanced in a number of ways. Adding bigger and more varied 
+datasets would enhance the accuracy and reliability of the models. The external factors, 
+promotions, holidays, and economic indicators might be regarded as the elements th at would 
+improve the effectiveness of prediction.  
+Also, a closer financial analysis would be possible through the incorporation of actual 
+expenditure and cost data. The system can be also extended with multi -store environments 
+and real time updating of data. Technically, it is possible to explore improved  models and 
+deployment enhancements to improve scalability and performance.  
+ 
+ 
+10.11  Achievement of the contribution to body of knowledge  
+The study has a contribution to the use of machine learning in retail forecasting since it has 
+shown that a practical and easy to understand forecasting system can be built on limited data. 
+The paper also identifies the usefulness of XGBoost with small tim e-series data and the 
+significance of model explainability with SHAP.  
+Additionally, the project will offer a practical demonstration of a full -fledged system that 
+combines machine learning with a web -based application, which will add both theoretical and 
+practical knowledge to the research field and the retail sector.  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                                 CHAPTER 10: Conclusion  
+20222296                                                        93 10.12  Concluding Remarks  
+In this chapter, the authors provided the final observations of the SalesSense project as a 
+whole, which generalized the results and the successes. The project was able to create a 
+forecasting system that uses machine learning with XGBoost and has a full -stack 
+implementation. The stated research aims and objectives were mostly met, which showed the 
+ability of the system to predict sales as well as any business decision -making.  
+Although there were some limitations like small amount of data and no data on the cost, the 
+system had obtained fair accuracy and usefulness. Primarily, the project presented critical 
+challenges and limitations as well as giving future improvement proposal s. On the whole, the 
+study is an important contribution to the use of machine learning in retail forecasting and can 
+be used to make data -driven decisions in small businesses.  
+ 
+ 
+ 
+ 
+ML-Based Sales Forecasting for Retail Spices                                                          References  
+20222296                                                        94  
+Time Schedule  
+ 
+Figure 5 - Gantt chart   
+ 
+ 
+ 
+
+ML-Based Sales Forecasting for Retail Spices                                                          References  
+20222296                                                        95 REFERENCES  
+Singh, D.P. (2023) 'Forecasting of Supermarket Sales using Big Data Analytics 
+and Machine Learning Techniques in Business Sector' , International Journal of 
+Core Engineering & Management  , 7(6), pp. 18 -30. Available at:  
+https://www.researchgate.net/publication/384243694 . 
+ 
+Taieb, S.B. (2014) Machine learning strategies for multi -step-ahead time series 
+forecasting . PhD thesis, Université Libre de Bruxelles. Available at: 
+https://souhaib -bentaieb.com/papers/2014_phd.pdf  
+ 
+Ramachandran, K.K. (2023) 'Predicting Supermarket Sales with Big Data 
+Analytics: A Comparative Study of Machine Learning Techniques', International 
+Journal of Data Analytics , 3(1), pp. 12 -21. Available at: 
+https://iaeme.com/Home/issue/IJDA?Volume=3&Issue=1  
+ 
+Martins, E. and Galegale, N.V. (2023) 'Sales forecasting using machine learning 
+algorithms', Revista de Gestão e Secretariado , 14(7), pp. 11294 -11308. doi: 
+10.7769/gesec.v14i7.1670. Available at: http://doi.org/10.7769/gesec.v14i7.1670  
+ 
+Venkiteela, P. (2025) 'Machine Learning Framework for Retail Sales 
+Forecasting', International Journal of Computational and Experimental Science 
+and Engineering , 11(4), pp. 7260 -7269. Available at: 
+https://doi.org/10.22399/ijcesen.3993  
+ 
+ML-Based Sales Forecasting for Retail Spices                                                          References  
+20222296                                                        96 Fredén, D. and Larsson, H. (2020) Forecasting Daily Supermarkets Sales with 
+Machine Learning . Master's thesis, KTH Royal Institute of Technology. 
+Availableat: http://www.diva -
+portal.org/smash/get/diva2:1442062/FULLTEXT02.pdf  
+ 
+Ahaggach, H., Abrouk, L. and Lebon, E. (2024) 'Systematic Mapping Study of 
+Sales Forecasting: Methods, Trends, and Future Directions', Forecasting , 6, pp. 
+502-532. Available at : https://doi.org/10.3390/forecast6030028  
+ 
+Ganguly, P. and Mukherjee, I. (2024) Enhancing Retail Sales Forecasting with 
+Optimized Machine Learning Models . Available at: arXiv:2410.13773v1. 
+Available at: https://arxiv.org/abs/2410.13773   
+ 
+Mustapha, O.O. and Sithole, T. (2025) 'Forecasting Retail Sales using Machine 
+Learning Models', American Journal of Statistics and Actuarial Science , 6(1), pp. 
+35-67. Available at: https://doi.org/10.47672/ajsas.2679  
+ 
+Jin, T. (2025) Optimizing Retail Sales Forecasting Through a PSO -Enhanced 
+Ensemble Model Integrating LightGBM, XGBoost, and Deep Neural Networks . 
+Available at: https://www.preprints.org/manuscript/202501.1604/v1  
+ 
+Ripatti, V. (2025) Forecasting Prescription Medication Utilization: A 
+Comparative Study of SARIMA, Prophet, XGBoost and LSTM Models . Master's 
+thesis, Aalto University. Available at: https://aaltodoc.aalto.fi/items/56bf87d5 -
+925d -4ee4 -a437 -239bb3c113cd  
+ML-Based Sales Forecasting for Retail Spices                                                          References  
+20222296                                                        97 Fourkiotis, K.P. and Tsadiras, A. (2024) 'Applying Machine Learning and 
+Statistical Forecasting Methods for Enhancing Pharmaceutical Sales Predictions', 
+Forecasting , 6(1), pp. 170 -186. Available at: 
+https://doi.org/10.3390/forecast6010010  
+ 
+Chen, T. and Guestrin, C. (2016) ‘XGBoost: A scalable tree boosting system’, 
+Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge 
+Discovery and Data Mining , 22, pp. 785 –794. Available at:  
+https://doi.org/10.1145/2939672.2939785  
+ 
+Lundberg, S.M. and Lee, S.I. (2017) ‘A unified approach to interpreting model 
+predictions’, Advances in Neural Information Processing Systems , 30, pp. 4765 –
+4774. Available at:  https://doi.org/10.48550/arXiv.1705.07874  
+ 
+Hyndman, R.J. and Athanasopoulos, G. (2021) ‘Forecasting: principles and 
+practice’, OTexts , 3rd ed., pp. 1 –442. Available at:  https://otexts.com/fpp3/  
+ 
+James, G., Witten, D., Hastie, T. and Tibshirani, R. (2021) ‘An introduction to 
+statistical learning’, Springer Texts in Statistics , 2nd ed., pp. 1 –607. Available at:  
+https://doi.org/10.1007/978 -1-0716 -1418 -1 
+ 
+Chen, T. and Guestrin, C. (2016) 'XGBoost: A Scalable Tree Boosting System', 
+Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge 
+Discovery and Data Mining, pp. 785 –794. Available at: 
+https://doi.org/10.1145/2939672.2939785  
+ML-Based Sales Forecasting for Retail Spices                                                          References  
+20222296                                                        98  
+PROOF OF EVALUATION  
+Figure 6 - Proof of Evaluation  
+
