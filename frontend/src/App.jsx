@@ -56,7 +56,7 @@ function App() {
   const fetchScenario = async () => {
     try {
       setScenarioLoading(true);
-      const res = await axios.post('http://localhost:8000/api/what-if', {
+      const res = await axios.post('http://15.252.142.167:8000/api/what-if', {
         price_change_pct: priceChange,
         demand_surge_pct: demandSurge,
         fixed_cost_ratio: fixedCostRatio / 100,
@@ -74,11 +74,11 @@ function App() {
   const fetchData = async (retries = 3) => {
     try {
       // Fetch Summary 
-      const sumRes = await axios.get('http://localhost:8000/api/summary');
+      const sumRes = await axios.get('http://15.252.142.167:8000/api/summary');
       setSummary(sumRes.data);
 
       // fetch the complex Forecast
-      const foreRes = await axios.get('http://localhost:8000/api/forecast');
+      const foreRes = await axios.get('http://15.252.142.167:8000/api/forecast');
       setForecast(foreRes.data);
     } catch (error) {
       console.error("Error fetching data", error);
@@ -105,7 +105,7 @@ function App() {
     if (processingStatus.status === 'processing') {
       interval = setInterval(async () => {
         try {
-          const res = await axios.get('http://localhost:8000/api/process-status');
+          const res = await axios.get('http://15.252.142.167:8000/api/process-status');
           setProcessingStatus(res.data);
           if (res.data.status === 'idle' && res.data.percentage === 100) {
             clearInterval(interval);
@@ -130,7 +130,7 @@ function App() {
 
     try {
       setProcessingStatus({ status: 'processing', percentage: 0 });
-      const res = await axios.post('http://localhost:8000/api/upload', formData);
+      const res = await axios.post('http://15.252.142.167:8000/api/upload', formData);
       if (res.data.error) {
         setProcessingStatus({ status: 'error', percentage: 0, error: res.data.error });
       }
