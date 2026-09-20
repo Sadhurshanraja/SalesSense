@@ -73,9 +73,9 @@ async def upload_file(
         
     processing_status = {"status": "processing", "percentage": 0}
     
-        background_tasks.add_task(run_processing)
+    background_tasks.add_task(run_processing)
     
-        return {"message": "File uploaded. Processing started.", "filename": target_filename}
+    return {"message": "File uploaded. Processing started.", "filename": target_filename}
 
 @app.get("/api/process-status")
 def get_process_status():
@@ -220,7 +220,7 @@ def get_forecast():
     model.fit(X, y) # Telling the brain to learn using historical data
 
     #  Iterative 6-Month Forecast 
-        future_preds = []
+    future_preds = []
     last_known   = monthly_data.copy()
     first_month_X = None
 
